@@ -73,6 +73,9 @@
                                                     class="btn btn-warning btn-sm">Edit</a>
                                                 <a href="{{ route('user.delete', $user->id) }}"
                                                     class="btn btn-danger btn-sm">Delete</a>
+                                                    <a href="{{ route('user.profile.update.view', $user->id) }}"
+                                                        class="btn btn-primary btn-sm">Profile Update</a>
+
                                             </td>
                                         </tr>
                                     @endforeach
