@@ -134,28 +134,28 @@
 
         <div class="form-group">
             <label for="brand_name">Brand Name</label>
-            <input type="text" id="brand_name" name="brand_name" value="{{ $user->brand_name }}" placeholder="Enter brand name">
+            <input class="form-control" type="text" id="brand_name" name="brand_name" value="{{ $user->brand_name }}" placeholder="Enter brand name">
             <input type="hidden" id="id" name="id" value="{{ $user->id }}">
         </div>
 
         <div class="form-group">
             <label for="bio">Bio</label>
-            <textarea id="bio" name="bio" placeholder="Enter bio">{{ $user->bio }}</textarea>
+            <textarea class="form-control" id="bio" name="bio" placeholder="Enter bio">{{ $user->bio }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="instagram_username">Instagram Username</label>
-            <input type="text" id="instagram_username" name="instagram_username" value="{{ $user->instagram_username}}" placeholder="Enter instagram username">
+            <input class="form-control" type="text" id="instagram_username" name="instagram_username" value="{{ $user->instagram_username}}" placeholder="Enter instagram username">
         </div>
          {{-- testing --}}
         <div class="form-group">
             <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" value="{{ $user->dob }}">
+            <input type="date" id="dob" name="dob" value="{{ $user->dob }}" class="form-control">
         </div>
 
         <div class="form-group">
             <label for="gender">Gender</label>
-            <select id="gender" name="gender">
+            <select id="gender" name="gender" class="form-control">
                 <option value="">Select</option>
                 <option {{ $user->gender == 'male'? 'selected' : ''  }} value="male">Male</option>
                 <option {{ $user->gender == 'female'? 'selected' : ''  }} value="female">Female</option>
@@ -165,7 +165,7 @@
 
         <div class="form-group">
             <label for="vertical">Verticals</label>
-            <select id="vertical_id" name="vertical_id">
+            <select class="form-control" id="vertical_id" name="vertical_id">
                 <option value="">Select</option>
                 @foreach ($verticals as $vertical )
                 <option {{ $vertical->id == $user->vertical_id ? 'selected' : '' }} value="{{ $vertical->id }} ">{{ $vertical->vertical_name }}</option>
