@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // ---call all custom seeder----
         $this->call([
             AdminSeeder::class,
+            VerticalSeeder::class,
         ]);
     }
 }
