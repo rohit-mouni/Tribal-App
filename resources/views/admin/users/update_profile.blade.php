@@ -166,17 +166,10 @@
         <div class="form-group">
             <label for="vertical">Verticals</label>
             <select id="vertical_id" name="vertical_id">
+                <option value="">Select</option>
                 @foreach ($verticals as $vertical )
                 <option {{ $vertical->id == $user->vertical_id ? 'selected' : '' }} value="{{ $vertical->id }} ">{{ $vertical->vertical_name }}</option>
                 @endforeach
-                {{-- <option value="" disabled selected>Select</option>
-                <option value="1">Health/Wellness</option>
-                <option value="2">Travel</option>
-                <option value="3">Food</option>
-                <option value="4">Cooking</option>
-                <option value="5">Pets</option>
-                <option value="6">Fashion</option>
-                <option value="7">Lifestyle</option> --}}
             </select>
         </div>
 
