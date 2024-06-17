@@ -147,7 +147,7 @@
             <label for="instagram_username">Instagram Username</label>
             <input type="text" id="instagram_username" name="instagram_username" value="{{ $user->instagram_username}}" placeholder="Enter instagram username">
         </div>
-
+         {{-- testing --}}
         <div class="form-group">
             <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" value="{{ $user->dob }}">
