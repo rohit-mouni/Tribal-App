@@ -37,6 +37,8 @@ Route::controller(UserController::class)->prefix('admin')->group(function () {
     Route::get('user-edit/{id}', 'userEdit')->name('user.edit');
     Route::post('user-update/{id}', 'userUpdate')->name('user.update');
     Route::get('user-delete/{id}', 'userDelete')->name('user.delete');
+    Route::get('user-profile-update/{id?}', 'userProfileUpdateView')->name('user.profile.update.view');
+    Route::post('user-profile-update/{id?}', 'userProfileUpdate')->name('user.profile.update');
 });
 
 Route::controller(CategoryController::class)->prefix('admin')->group(function () {

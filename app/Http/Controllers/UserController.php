@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Vertical;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
@@ -109,5 +110,57 @@ class UserController extends Controller
         File::delete($ImagePath);
         $data->delete();
         return redirect()->route('user.list')->with('success', 'User Delete Successfully');
+    }
+
+    public function userProfileUpdateView($id)
+    {
+        $verticals = Vertical::get();
+        $user=User::where('id',$id)->first();
+        return view('admin.users.update_profile',compact('user','verticals'));
+    }
+    public function userProfileUpdate(Request $request)
+    {
+        // dd($request->all());
+       $user = User::where('id',$request->id)->first();
+       if($user)
+       {
+       $user->brand_name=$request->brand_name;
+       $user->bio=$request->bio;
+       $user->instagram_username=$request->instagram_username;
+       $user->dob=$request->dob;
+       $user->gender=$request->gender;
+       $user->vertical_id=$request->vertical_id;
+       if ($request->hasFile('main_image')) {
+        $file = $request->file('main_image');
+        //$image=$file->getClientOriginalName();
+        $main_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
+        $destinationPath ='admin-assets/uploads/profileimages/';
+        $file->move($destinationPath,$main_image);
+        $user->profile_image=$main_image;
+       }
+       if ($request->hasFile('second_image')) {
+        $file = $request->file('second_image');
+        //$image=$file->getClientOriginalName();
+        $second_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
+        $destinationPath ='admin-assets/uploads/profileimages/';
+        $file->move($destinationPath,$second_image);
+        $user->profile_img_second=$second_image;
+       }
+       if ($request->hasFile('third_image')) {
+        $file = $request->file('third_image');
+        //$image=$file->getClientOriginalName();
+        $third_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
+        $destinationPath ='admin-assets/uploads/profileimages/';
+        $file->move($destinationPath,$third_image);
+        $user->profile_img_third=$third_image;
+       }
+       $user->save();
+       return redirect()->route('user.list')->with('success','User profile updated successfully');
+    }
+    else
+    {
+        return redirect()->route('user.list')->with('error','User profile not found');
+    }
+
     }
 }
