@@ -55,8 +55,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="Inputusername">User Type</label>
+                                    <label for="Inputusername">User Type</label>                                    
                                     <select class="form-control" name="user_type">
+                                        <option value="">Select User</option>
                                         <option value="brand" {{ $TrendsData->user_type == 'brand' ? 'selected' : '' }}>
                                             Brand</option>
                                         <option value="creator" {{ $TrendsData->user_type == 'creator' ? 'selected' : '' }}>
