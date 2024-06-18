@@ -40,7 +40,7 @@ class VerticalController extends Controller
             'vertical_name'   => 'required|unique:verticals,vertical_name,'.$id,
             'status'          => 'required',
         ]);
-
+        // ----
         $data['vertical_name'] = $request->vertical_name;
         $data['status'] =    $request->status;
 
@@ -55,8 +55,4 @@ class VerticalController extends Controller
         return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
 
-    public function demi()
-    {
-     //testing git
-    }
 }
