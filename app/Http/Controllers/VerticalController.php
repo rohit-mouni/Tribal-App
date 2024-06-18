@@ -59,5 +59,6 @@ class VerticalController extends Controller
     {
      //testing git
      //testing git
+     //testing git
     }
 }
