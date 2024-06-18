@@ -14,16 +14,6 @@ class DashboardController extends Controller
         $TotalAdmin = User::where('user_type','admin')->count();
         return view('admin.dashboard',compact('TotalUser','TotalAdmin'));
     }
-
-
-
-
-
-
-
-
-
-
     public function logout(Request $request)
     {
         Auth::logout();
