@@ -53,5 +53,9 @@ class VerticalController extends Controller
         $data->delete();
         return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
+    public function rohitMouni()
+    {
+        echo "Hey! This is Rohit Mouni";
+    }
 
 }
