@@ -46,26 +46,11 @@ class VerticalController extends Controller
         Vertical::where('id', $id)->update($data);
         return redirect()->route('vertical.list')->with('success', 'Vertical Update Successfully');
     }
-
     public function verticalDelete($id)
     {
         $data = Vertical::find($id);
         $data->delete();
         return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
-    public function rohitMouni()
-    {
-        echo "Hey! This is Rohit Mouni";
-    }
-
-    public function surendra()
-    {
-        echo "Hey! This is surendra";
-    }
-    public function final()
-    {
-        echo "Hey! This is surendra";
-    }
-
 
 }
