@@ -17,17 +17,6 @@ class CategoryController extends Controller
     {
         return view('admin.category.create');
     }
-
-
-
-
-
-
-
-
-
-
-
     public function categoryStore(Request $request)
     {
         $request->validate([
