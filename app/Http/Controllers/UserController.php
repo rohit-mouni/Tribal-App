@@ -68,6 +68,7 @@ class UserController extends Controller
             'name'         => 'required|unique:users,name,' . $id,
             'email'        => 'required|unique:users,email,' . $id,
             'status'       => 'required',
+            'user_type'    => 'required',
             // 'password'     => 'required|min:8|conform_password',
             // 'image'        => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
