@@ -58,4 +58,9 @@ class VerticalController extends Controller
         echo "Hey! This is Rohit Mouni";
     }
 
+    public function surendra()
+    {
+        echo "Hey! This is surendra";
+    }
+
 }
