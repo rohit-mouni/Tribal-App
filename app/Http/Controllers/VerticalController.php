@@ -62,5 +62,10 @@ class VerticalController extends Controller
     {
         echo "Hey! This is surendra";
     }
+    public function final()
+    {
+        echo "Hey! This is surendra";
+    }
+
 
 }
