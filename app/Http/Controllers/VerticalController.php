@@ -55,10 +55,12 @@ class VerticalController extends Controller
         return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
 
-    public function demiNew()
+    public function verticalDelete($id)
     {
-     //testing git
-     //testing git
-     //testing git
+        $data = Vertical::find($id);
+        $data->delete();
+        return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
+
+
 }
