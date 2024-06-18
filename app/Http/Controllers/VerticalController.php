@@ -55,4 +55,6 @@ class VerticalController extends Controller
         return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
 
+
+
 }

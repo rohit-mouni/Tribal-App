@@ -13,6 +13,18 @@ class AuthController extends Controller
     {
         return view('admin.auth.login');
     }
+
+
+
+
+
+
+
+
+
+
+
+
     public function loginCrediential(Request $request)
     {
         $validatedData = $request->validate([

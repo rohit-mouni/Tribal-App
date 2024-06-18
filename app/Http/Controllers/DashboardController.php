@@ -15,6 +15,15 @@ class DashboardController extends Controller
         return view('admin.dashboard',compact('TotalUser','TotalAdmin'));
     }
 
+
+
+
+
+
+
+
+
+
     public function logout(Request $request)
     {
         Auth::logout();
