@@ -55,12 +55,6 @@ class VerticalController extends Controller
         return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
     }
 
-    public function verticalDelete($id)
-    {
-        $data = Vertical::find($id);
-        $data->delete();
-        return redirect()->route('vertical.list')->with('success', 'Vertical Delete Successfully');
-    }
 
 
 }
