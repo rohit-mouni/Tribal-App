@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TravelPostPlanController;
 use App\Http\Controllers\VerticalController;
 use App\Http\Controllers\SubCategoryController;
 
@@ -65,6 +66,20 @@ Route::controller(SubCategoryController::class)->prefix('admin')->group(function
     Route::get('sub-category-edit/{id}', 'subCategoryEdit')->name('sub.category.edit');
     Route::post('sub-category-update/{id}', 'subCategoryUpdate')->name('sub.category.update');
     Route::get('sub-category-delete/{id}', 'subCategoryDelete')->name('sub.category.delete');
+});
+Route::controller(TravelPostPlanController::class)->prefix('admin')->group(function () {
+    //---------------------------Hangout routes------------------------
+    Route::get('view-hangout', 'viewHangout')->name('view.hangout');
+    Route::post('add-hangout', 'addHangout')->name('add.hangout');
+    Route::post('edit-hangout', 'editHangout')->name('edit.hangout');
+    Route::get('delete-hangout/{id}', 'deleteHangout')->name('delete.hangout');
+
+    //----------------------------Post routes--------------------------
+    Route::get('view-post', 'viewPost')->name('view.post');
+    Route::post('add-post', 'addPost')->name('add.post');
+    Route::post('edit-post', 'editPost')->name('edit.post');
+    Route::get('delete-post/{id}', 'deletePost')->name('delete.post');
+
 });
 
 

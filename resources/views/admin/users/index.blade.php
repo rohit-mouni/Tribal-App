@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary float-right">Add User</a>
+                            <a href="{{ route('user.create') }}" class="btn btn-primary float-left">Add User</a>
                         </div>
                         <div class="card-body">
                             <table id="subadminlisting" class="table table-bordered table-striped">
