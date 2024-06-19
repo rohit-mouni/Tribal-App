@@ -7,6 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title> @yield('title')</title>
 
+    <script>
+        var base_url = '{{ config('app.url') }}';
+    </script>
     <!-- Google Font: Source Sans Pro -->
     <!-- jQuery -->
     <script src="{{ asset('/admin-assets/plugins/jquery/jquery.min.js') }}"></script>
@@ -136,7 +139,7 @@
                         </li>
 
                         {{-- ------category----------- --}}
-                        <li
+                        {{-- <li
                             class="nav-item  {{ Route::currentRouteName() == 'category.list' || Route::currentRouteName() == 'sub.category.list' || Route::currentRouteName() == 'get_addon' ? 'menu-open' : '' }}">
                             <a href=""
                                 class="nav-link {{ Route::currentRouteName() == 'category.list' || Route::currentRouteName() == 'sub.category.list' || Route::currentRouteName() == 'get_addon' ? 'active' : '' }}">
@@ -161,7 +164,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         {{-- ------category----------- --}}
 
                         <!----Verticals----->
@@ -172,6 +175,42 @@
                                 <p>Verticals</p>
                             </a>
                         </li>
+                        {{-- ------Create Plan/Post----------- --}}
+                        <li
+                            class="nav-item  {{ Route::currentRouteName() == 'category.list' || Route::currentRouteName() == 'view.post' || Route::currentRouteName() == 'view.hangout' ? 'menu-open' : '' }}">
+                            <a href=""
+                                class="nav-link {{ Route::currentRouteName() == 'category.list' || Route::currentRouteName() == 'view.post' || Route::currentRouteName() == 'view.hangout' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-globe"></i>
+                                <p>Create Plan
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                {{-- <li class="nav-item">
+                                    <a href="{{ route('category.list') }}"
+                                        class="nav-link {{ Route::currentRouteName() == 'category.list' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Travel Plan</p>
+                                    </a>
+                                </li> --}}
+                                <li class="nav-item">
+                                    <a href="{{ route('view.hangout') }}"
+                                        class="nav-link {{ Route::currentRouteName() == 'view.hangout' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Hangout</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('view.post') }}"
+                                        class="nav-link {{ Route::currentRouteName() == 'view.post' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Post</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{-- ------category----------- --}}
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -233,7 +272,7 @@
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('/admin-assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/admin-assets/assets/js/adminjs.js') }}"></script>
+    <script src="{{ asset('/admin-assets/assets/js/admin.js') }}"></script>
     {{-- -------------------------------- --}}
     <!-- toastr -->
 

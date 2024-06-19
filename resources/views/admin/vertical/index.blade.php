@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('vertical.create') }}" class="btn btn-primary float-right">Add Vertical</a>
+                            <a href="{{ route('vertical.create') }}" class="btn btn-primary float-left">Add Vertical</a>
                         </div>
                         <div class="card-body">
                             <table id="subadminlisting" class="table table-bordered table-striped">
