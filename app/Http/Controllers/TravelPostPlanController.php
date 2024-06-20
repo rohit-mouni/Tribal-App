@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HangoutModel;
 use App\Models\PostModel;
+use App\Models\Vertical;
 use App\Models\PlanModel;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -13,12 +14,12 @@ class TravelPostPlanController extends Controller
 {
     public function viewHangout()
     {
-        $hangouts = HangoutModel::all();
+        $hangouts = HangoutModel::get();
         return view('admin.travel_post_plan.hangout', compact('hangouts'));
     }
     public function addHangout(Request $request)
     {
-        // dd($request->all());
+        // dd($request->get());
         $request->validate([
             "image" => "required|image",
             "title" => "required|string|max:255",
@@ -83,7 +84,7 @@ class TravelPostPlanController extends Controller
 
     public function viewPost()
     {
-        $posts = PostModel::all();
+        $posts = PostModel::get();
         return view('admin.travel_post_plan.post', compact('posts'));
     }
 
@@ -114,7 +115,7 @@ class TravelPostPlanController extends Controller
 
     public function editPost(Request $request)
     {
-        // dd($request->all());
+        // dd($request->get());
 
         $request->validate([
             // "image" => "required|image",
@@ -156,14 +157,15 @@ class TravelPostPlanController extends Controller
         return back()->with('success', 'Post deleted successfully');
     }
 
-    public function viewplan()
+    public function viewPlan()
     {
-        $plans = PlanModel::all();
-        return view('admin.travel_post_plan.plan', compact('plans'));
+        $plans = PlanModel::orderBy('id','desc')->get();
+        $verticals=Vertical::get();
+        return view('admin.travel_post_plan.plan', compact('plans','verticals'));
     }
-    public function addplan(Request $request)
+    public function addPlan(Request $request)
     {
-        //  dd($request->all());
+        //  dd($request->get());
          $request->validate([
             "image" => "required|image",
             "name" => "required|string|max:255",
@@ -196,7 +198,7 @@ class TravelPostPlanController extends Controller
         return back()->with("success", "Plan added successfully");
     }
 
-    public function deleteplan($id)
+    public function deletePlan($id)
     {
         $data = PlanModel::find($id);
         $ImagePath = public_path('admin-assets/uploads/travel_post_plan/plan/') . $data->image;
@@ -205,7 +207,7 @@ class TravelPostPlanController extends Controller
         return back()->with('success', 'Plan deleted successfully');
     }
 
-    public function editplan(Request $request)
+    public function editPlan(Request $request)
     {
         $request->validate([
             "name" => "required|string|max:255",

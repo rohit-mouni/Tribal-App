@@ -8,6 +8,10 @@
         /* display: none; */
         margin-top: 10px;
     }
+    /* for multiple select options */
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #0e0e0e;
+}
 </style>
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -159,26 +163,28 @@
 
                 <div class="form-group">
                     <label for="destinations">Destinations</label>
-                    <select name="destinations[]" class="form-control" id="destinations" multiple>
+                    <select style="width: 100%;" name="destinations[]" class="form-control select_multiple" id="destinations" multiple>
                         {{-- <option value="">Select Multiple Destinations</option> --}}
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        <option value="4">four</option>
-                        <option value="5">five</option>
-                        <option value="6">six</option>
+                        <option value="one">One</option>
+                        <option value="two">Two</option>
+                        <option value="three">Three</option>
+                        <option value="four">four</option>
+                        <option value="five">five</option>
+                        <option value="six">six</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="duratioverticalsnInput">Verticals</label>
-                    <select name="verticals[]" class="form-control" id="verticals" multiple>
+                    <select style="width: 100%;" name="verticals[]" class="form-control select_multiple" id="verticals" multiple>
                         {{-- <option value="">Select Multiple Verticals</option> --}}
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        <option value="4">four</option>
-                        <option value="5">five</option>
-                        <option value="6">six</option>
+                        @foreach ($verticals as $vertical)
+                        <option value="{{ $vertical->vertical_name }}">{{ $vertical->vertical_name }}</option>
+                        @endforeach
+                        {{-- <option value="two">Two</option>
+                        <option value="three">Three</option>
+                        <option value="four">four</option>
+                        <option value="five">five</option>
+                        <option value="six">six</option> --}}
                     </select>
                 </div>
                 {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    //select multiple options
+    $('.select_multiple').select2();
+
     //--------------------------------on edit button click------------------------
     // $('.edit_hangout').on('click', function (event) {
     //     event.preventDefault(event)
@@ -72,6 +76,11 @@ $(document).ready(function () {
         $('#plan_modal #departing').val(departing);
         $('#plan_modal #about_trip').val(about_trip);
         $('#plan_modal #link').val(link);
+        $('#plan_modal #imgPreview').attr('src', img_path + '/' + image);
+        $('#plan_modal #plan_model_title').text("Edit plan");
+        $('#plan_modal #plan_submit_btn').text("Update");
+        var plan_id = '<input type="hidden" name="plan_id" value=' + id + ' class="plan_id">';
+        $("#name").after(plan_id);
 
         if (is_private == 1) {
             $("#is_private").prop("checked", true);
@@ -79,15 +88,29 @@ $(document).ready(function () {
         else {
             $("#is_private").prop("checked", false);
         }
-        var destinations=destinations.split(",");
+
+        if (destinations.includes(',')) {
+
+            var destinations = destinations.split(",");
+        }
+        else {
+
+            var destinations = destinations.split();
+        }
+
         $('#destinations').val(destinations);
+        $('#destinations').change();
 
-        // $('#destinations').change();
-        var verticals=verticals.split(",");
+        if (verticals.includes(",")) {
+            var verticals = verticals.split(",");
+        }
+        else {
+            var verticals = verticals.split();
+        }
+
         $('#verticals').val(verticals);
-        // $('#verticals').change();
+        $('#verticals').change();
 
-        $('#plan_modal #imgPreview').attr('src', img_path + '/' + image);
         $('#plan_modal #plan_model_title').text("Edit plan");
         $('#plan_modal #plan_submit_btn').text("Update");
         var plan_id = '<input type="hidden" name="plan_id" value=' + id + ' class="plan_id">';
@@ -98,6 +121,7 @@ $(document).ready(function () {
     //------------------------------On model hide------------------------
     $('.modal').on('hidden.bs.modal', function () {
 
+
         if ($(this).find('form').attr("id") == 'add_hangout_form' || $(this).find('form').attr("id") == 'edit_hangout_form') {
 
             $(this).find('form').attr("id", "add_hangout_form");
@@ -107,6 +131,9 @@ $(document).ready(function () {
             form.validate().resetForm();
             $(this).find('form').trigger('reset');
             form.find('.error').removeClass('error');
+
+            $('#plan_modal #plan_model_title').text("Add plan");
+            $('#plan_modal #plan_submit_btn').text("Submit");
 
         }
         else
@@ -120,19 +147,26 @@ $(document).ready(function () {
                 $(this).find('form').trigger('reset');
                 form.find('.error').removeClass('error');
 
+                $('#post_modal #post_model_title').text("Add post");
+                $('#post_modal #post_submit_btn').text("Submit");
             }
-        else
-            if ($(this).find('form').attr("id") == 'add_plan_form' || $(this).find('form').attr("id") == 'edit_plan_form') {
+            else
+                if ($(this).find('form').attr("id") == 'add_plan_form' || $(this).find('form').attr("id") == 'edit_plan_form') {
 
-                $(this).find('form').attr("id", "add_plan_form");
-                $(this).find('form').attr("action", base_url + 'admin/add-plan');
-                $('.plan_id').remove();
-                var form = $('#add_plan_form');
-                form.validate().resetForm();
-                $(this).find('form').trigger('reset');
-                form.find('.error').removeClass('error');
+                    $(this).find('form').attr("id", "add_plan_form");
+                    $(this).find('form').attr("action", base_url + 'admin/add-plan');
+                    $('.plan_id').remove();
+                    var form = $('#add_plan_form');
+                    form.validate().resetForm();
+                    $(this).find('form').trigger('reset');
+                    form.find('.error').removeClass('error');
 
-            }
+                    $('#plan_modal #plan_model_title').text("Add plan");
+                    $('#plan_modal #plan_submit_btn').text("Submit");
+
+                    $('#destinations').val([]).trigger('change');
+                    $('#verticals').val([]).trigger('change');
+                }
     });
     // $('#hangout_add_btn').on('click', function (event) {
     //     event.preventDefault(event)
