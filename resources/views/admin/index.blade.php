@@ -177,29 +177,29 @@
                         </li>
                         {{-- ------Create Plan/Post----------- --}}
                         <li
-                            class="nav-item  {{ Route::currentRouteName() == 'category.list' || Route::currentRouteName() == 'view.post' || Route::currentRouteName() == 'view.hangout' ? 'menu-open' : '' }}">
+                            class="nav-item  {{ Route::currentRouteName() == 'view.plan' || Route::currentRouteName() == 'view.post' || Route::currentRouteName() == 'view.hangout' ? 'menu-open' : '' }}">
                             <a href=""
-                                class="nav-link {{ Route::currentRouteName() == 'category.list' || Route::currentRouteName() == 'view.post' || Route::currentRouteName() == 'view.hangout' ? 'active' : '' }}">
+                                class="nav-link {{ Route::currentRouteName() == 'view.plan' || Route::currentRouteName() == 'view.post' || Route::currentRouteName() == 'view.hangout' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-globe"></i>
                                 <p>Create Plan
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                {{-- <li class="nav-item">
-                                    <a href="{{ route('category.list') }}"
-                                        class="nav-link {{ Route::currentRouteName() == 'category.list' ? 'active' : '' }}">
+                                <li class="nav-item">
+                                    <a href="{{ route('view.plan') }}"
+                                        class="nav-link {{ Route::currentRouteName() == 'view.plan' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Travel Plan</p>
                                     </a>
-                                </li> --}}
-                                <li class="nav-item">
+                                </li>
+                                {{-- <li class="nav-item">
                                     <a href="{{ route('view.hangout') }}"
                                         class="nav-link {{ Route::currentRouteName() == 'view.hangout' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Hangout</p>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ route('view.post') }}"
                                         class="nav-link {{ Route::currentRouteName() == 'view.post' ? 'active' : '' }}">
@@ -243,15 +243,15 @@
     @endif
 
     @if (Session::has('error'))
-        <script>
-            $(document).ready(function() {
-                toastr.success("{{ session('error') }}", "Error", {
-                    closeButton: true,
-                    progressBar: true
-                });
+    <script>
+        $(document).ready(function() {
+            toastr.error("{{ session('error') }}", "Error", {
+                closeButton: true,
+                progressBar: true
             });
-        </script>
-    @endif
+        });
+    </script>
+@endif
 
     <!-- REQUIRED SCRIPTS -->
 

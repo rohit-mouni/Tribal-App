@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HangoutModel;
 use App\Models\PostModel;
+use App\Models\PlanModel;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
@@ -144,15 +145,96 @@ class TravelPostPlanController extends Controller
         $post->save();
 
         return back()->with("success", "Post updated successfully");
-
     }
 
-        public function deletePost($id)
+    public function deletePost($id)
     {
         $data = PostModel::find($id);
         $ImagePath = public_path('admin-assets/uploads/travel_post_plan/post/') . $data->image;
         File::delete($ImagePath);
         $data->delete();
         return back()->with('success', 'Post deleted successfully');
+    }
+
+    public function viewplan()
+    {
+        $plans = PlanModel::all();
+        return view('admin.travel_post_plan.plan', compact('plans'));
+    }
+    public function addplan(Request $request)
+    {
+        //  dd($request->all());
+         $request->validate([
+            "image" => "required|image",
+            "name" => "required|string|max:255",
+            "arriving" => "required",
+            "departing" => "required",
+            "about_trip" => "required",
+            "link" => "required",
+            "destinations" => "required",
+            "verticals" => "required"
+        ]);
+        $plan = new PlanModel();
+        $plan->name = $request->name;
+        $plan->arriving = $request->arriving;
+        $plan->departing = $request->departing;
+        $plan->about_trip = $request->about_trip;
+        $plan->link = $request->link;
+        $plan->destinations = implode(',', $request->destinations);
+        $plan->verticals = implode(',', $request->verticals);
+        $plan->is_private = $request->is_private == "on" ? '1' : '0';
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $img = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = 'admin-assets/uploads/travel_post_plan/plan';
+            $file->move($destinationPath, $img);
+            $plan->image = $img;
+        }
+        $plan->save();
+
+        return back()->with("success", "Plan added successfully");
+    }
+
+    public function deleteplan($id)
+    {
+        $data = PlanModel::find($id);
+        $ImagePath = public_path('admin-assets/uploads/travel_post_plan/plan/') . $data->image;
+        File::delete($ImagePath);
+        $data->delete();
+        return back()->with('success', 'Plan deleted successfully');
+    }
+
+    public function editplan(Request $request)
+    {
+        $request->validate([
+            "name" => "required|string|max:255",
+            "arriving" => "required",
+            "departing" => "required",
+            "about_trip" => "required",
+            "link" => "required",
+            "destinations" => "required",
+            "verticals" => "required"
+        ]);
+        $plan =PlanModel::where('id',$request->plan_id)->first();
+        $plan->name = $request->name;
+        $plan->arriving = $request->arriving;
+        $plan->departing = $request->departing;
+        $plan->about_trip = $request->about_trip;
+        $plan->link = $request->link;
+        $plan->destinations = implode(',', $request->destinations);
+        $plan->verticals = implode(',', $request->verticals);
+        $plan->is_private = $request->is_private == "on" ? '1' : '0';
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $img = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = 'admin-assets/uploads/travel_post_plan/plan';
+            $file->move($destinationPath, $img);
+            $plan->image = $img;
+        }
+        $plan->save();
+
+        return back()->with("success", "Plan updated successfully");
     }
 }

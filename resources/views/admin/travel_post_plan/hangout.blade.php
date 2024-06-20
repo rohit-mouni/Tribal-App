@@ -1,5 +1,5 @@
 @extends ('admin/index')
-@section('title', 'Vertical-List')
+@section('title', 'Hangout-List')
 @section('content')
 <style>
     .img-preview {
