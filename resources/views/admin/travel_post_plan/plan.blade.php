@@ -146,7 +146,7 @@
                     <div class="form-check">
                         <div class="form-check form-switch">
                             <input name="is_private" class="form-check-input" type="checkbox" role="switch" id="is_private" >
-                            <label class="form-check-label" for="is_private">Public/Private</label>
+                            <label class="form-check-label" for="is_private">Private</label>
                           </div>
                     @error('is_private')
                    <div class="text-danger">{{ $message }}</div>

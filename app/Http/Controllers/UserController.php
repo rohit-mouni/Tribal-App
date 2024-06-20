@@ -22,6 +22,7 @@ class UserController extends Controller
     }
     public function userStore(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name'        => 'required|unique:users,name',
             'email'       => 'required|email|unique:users,email',
@@ -52,6 +53,7 @@ class UserController extends Controller
         $data['email'] = $request->email;
         $data['user_type'] = $request->user_type;
         $data['password'] = Hash::make($request->password);
+        // dd($data);
         // -----
         User::create($data);
         return redirect()->route('user.list')->with('success', 'User Create Successfully');
@@ -99,6 +101,7 @@ class UserController extends Controller
         $data['name'] =  $request->name;
         $data['email'] = $request->email;
         $data['status'] = $request->status;
+        $data['user_type'] = $request->user_type;
 
         User::where('id', $id)->update($data);
         return redirect()->route('user.list')->with('success', 'User Details Updated Successfully');
