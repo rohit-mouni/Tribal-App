@@ -21,6 +21,8 @@ Route::controller(AuthController::class)->prefix('admin')->group(function () {
     Route::post('reset-forgot-password', 'resetForgotPassword')->name('admin.reset.forgotpassword');
     Route::get('change-password', 'changePassword')->name('admin.change.password');
     Route::post('store-password', 'storePassword')->name('admin.store.password');
+    Route::post('change-detail', 'changeAdminDetail')->name('admin.change.detail');
+    Route::post('password-reset', 'changeAdminPassword')->name('admin.reset.password');
 });
 
 
@@ -79,6 +81,12 @@ Route::controller(TravelPostPlanController::class)->prefix('admin')->group(funct
     Route::post('add-post', 'addPost')->name('add.post');
     Route::post('edit-post', 'editPost')->name('edit.post');
     Route::get('delete-post/{id}', 'deletePost')->name('delete.post');
+
+    //----------------------------Plan routes--------------------------
+    Route::get('view-plan', 'viewplan')->name('view.plan');
+    Route::post('add-plan', 'addplan')->name('add.plan');
+    Route::post('edit-plan', 'editplan')->name('edit.plan');
+    Route::get('delete-plan/{id}', 'deleteplan')->name('delete.plan');
 
 });
 

@@ -120,7 +120,7 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#information"
                                         data-toggle="tab">Info</a></li>
-                                {{-- <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a> --}}
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
                                 </li>
                             </ul>
                         </div>
@@ -133,7 +133,7 @@
                                 <!------Information Tab-------->
                                 <div class="tab-pane active" id="information">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">UserName : </label>
+                                        <label class="col-sm-2 col-form-label">Name : </label>
                                         <div class="col-sm-10 mt-2">{{ $data->name }}</div>
                                     </div>
                                     <div class="form-group row">
@@ -149,18 +149,18 @@
                                 <!------Setting Tab-------->
                                 <div class="tab-pane" id="settings">
 
-                                    <form class="form-horizontal" action="{{ url('admin/admin_general_info') }}"
+                                    <form class="form-horizontal" action="{{ route('admin.change.detail') }}"
                                         method="post" name="general_info" id="general_info">
                                         @csrf
 
                                         <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">UserName</label>
+                                            <label for="name" class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                @error('username')
+                                                @error('name')
                                                     <div class="form-valid-error text-danger">{{ $message }}</div>
                                                 @enderror
-                                                <input type="text" class="form-control" id="username" name="username"
-                                                    placeholder="User Name" value="{{ $data->username }}">
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="Enter Name" value="{{ $data->name }}">
                                             </div>
                                         </div>
 
@@ -175,7 +175,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        {{-- <div class="form-group row">
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Mobile</label>
                                             <div class="col-sm-10">
                                                 @error('mobile')
@@ -184,7 +184,7 @@
                                                 <input type="text" class="form-control" id="mobile" name="mobile"
                                                     placeholder="Mobile" value="{{ $data->mobile }}">
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
@@ -194,7 +194,7 @@
 
                                     </form>
 
-                                    <form class="form-horizontal" action="{{ url('admin/admin_update_pass') }}"
+                                    <form class="form-horizontal" action="{{ route('admin.reset.password') }}"
                                         method="post" name="password_info" id="password_info">
                                         @csrf
 
