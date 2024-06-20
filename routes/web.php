@@ -83,10 +83,10 @@ Route::controller(TravelPostPlanController::class)->prefix('admin')->group(funct
     Route::get('delete-post/{id}', 'deletePost')->name('delete.post');
 
     //----------------------------Plan routes--------------------------
-    Route::get('view-plan', 'viewplan')->name('view.plan');
-    Route::post('add-plan', 'addplan')->name('add.plan');
-    Route::post('edit-plan', 'editplan')->name('edit.plan');
-    Route::get('delete-plan/{id}', 'deleteplan')->name('delete.plan');
+    Route::get('view-plan', 'viewPlan')->name('view.plan');
+    Route::post('add-plan', 'addPlan')->name('add.plan');
+    Route::post('edit-plan', 'editPlan')->name('edit.plan');
+    Route::get('delete-plan/{id}', 'deletePlan')->name('delete.plan');
 
 });
 

@@ -44,6 +44,8 @@
     <!-----Custom Style Sheet------->
     <link rel="stylesheet" href="{{ asset('/admin-assets/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/assets/css/admin.css') }}">
+    <!-- selectTo cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -243,15 +245,15 @@
     @endif
 
     @if (Session::has('error'))
-    <script>
-        $(document).ready(function() {
-            toastr.error("{{ session('error') }}", "Error", {
-                closeButton: true,
-                progressBar: true
+        <script>
+            $(document).ready(function() {
+                toastr.error("{{ session('error') }}", "Error", {
+                    closeButton: true,
+                    progressBar: true
+                });
             });
-        });
-    </script>
-@endif
+        </script>
+    @endif
 
     <!-- REQUIRED SCRIPTS -->
 
@@ -274,8 +276,9 @@
     <script src="{{ asset('/admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/admin-assets/assets/js/admin.js') }}"></script>
     {{-- -------------------------------- --}}
-    <!-- toastr -->
-
+    <!-- selectTo cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- SweetAlert2 -->
     {{-- <!-- <script src="{{ asset('/admin-assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script> --> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
