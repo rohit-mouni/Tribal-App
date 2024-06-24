@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +15,9 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('/admin-assets/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/assets/css/style.css') }}">
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    {{-- --toster links end here--- --}}
 </head>
 
 <body class="hold-transition login-page">
@@ -27,10 +29,13 @@
             <div class="card-body">
                 <form action="{{ route('admin.store.password') }}" method="post">
                     @csrf
+                    {{-- @dd($token); --}}
+                    <input type="hidden" value="{{ $token }}" name="token">
                     <div class="row">
                         <div class="col">
                             <div class="input-group mb-0">
-                                <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+                                <input type="email" name="email" class="form-control" placeholder="Email"
+                                    value="{{ old('email') }}">
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-envelope"></span>
@@ -73,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="token" value="">
+                    {{-- <input type="hidden" name="token" value=""> --}}
                     <div class="row">
                         <div class="col mt-4">
                             <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
@@ -88,6 +93,7 @@
         </div>
     </div>
 
+
     {{-- -------------- --}}
     <!-- jQuery -->
     <script src="{{ asset('/admin-assets/plugins/jquery/jquery.min.js') }}"></script>
@@ -95,6 +101,32 @@
     <script src="{{ asset('/admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('/admin-assets/dist/js/adminlte.min.js') }}"></script>
+
+    <!-- Toastr JS -->
+    <script src="{{ url('/admin-assets/plugins/toastr/toastr.min.js') }}"></script>
+
+
+    @if (Session::has('success'))
+        <script>
+            $(document).ready(function() {
+                toastr.success("{{ session('success') }}", "Success", {
+                    closeButton: true,
+                    progressBar: true
+                });
+            });
+        </script>
+    @endif
+
+    @if (Session::has('error'))
+        <script>
+            $(document).ready(function() {
+                toastr.error("{{ session('error') }}", "Error", {
+                    closeButton: true,
+                    progressBar: true
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>
