@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="{{ asset('/admin-assets/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/admin-assets/assets/css/style.css') }}">
 
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    {{-- --toster links end here--- --}}
+
 </head>
 
 <body class="hold-transition login-page">
@@ -58,13 +62,49 @@
         </div>
     </div>
     <!-- /.login-box -->
-
+    {{-- -------------- --}}
     <!-- jQuery -->
     <script src="{{ asset('/admin-assets/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('/admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('/admin-assets/dist/js/adminlte.min.js') }}"></script>
+
+    <!-- Toastr JS -->
+    <script src="{{ url('/admin-assets/plugins/toastr/toastr.min.js') }}"></script>
+
+
+    @if (Session::has('success'))
+        <script>
+            $(document).ready(function() {
+                toastr.success("{{ session('success') }}", "Success", {
+                    closeButton: true,
+                    progressBar: true
+                });
+            });
+        </script>
+    @endif
+
+    @if (Session::has('error'))
+        <script>
+            $(document).ready(function() {
+                toastr.error("{{ session('error') }}", "Error", {
+                    closeButton: true,
+                    progressBar: true
+                });
+            });
+        </script>
+    @endif
+    @if (Session::has('info'))
+        <script>
+            $(document).ready(function() {
+                toastr.info("{{ session('info') }}", "Info", {
+                    closeButton: true,
+                    progressBar: true
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>

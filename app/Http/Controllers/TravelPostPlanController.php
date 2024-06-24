@@ -115,8 +115,6 @@ class TravelPostPlanController extends Controller
 
     public function editPost(Request $request)
     {
-        // dd($request->get());
-
         $request->validate([
             // "image" => "required|image",
             "title" => "required|string|max:255",
