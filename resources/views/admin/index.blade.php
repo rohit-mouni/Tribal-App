@@ -173,7 +173,8 @@
                         <li class="nav-item">
                             <a href="{{ route('vertical.list') }}"
                                 class="nav-link {{ Route::currentRouteName() == 'vertical.list' ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-users"></i>
+                                <i class="nav-icon fas fa-compass"></i>
+
                                 <p>Verticals</p>
                             </a>
                         </li>
