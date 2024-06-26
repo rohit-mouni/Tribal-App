@@ -74,7 +74,7 @@ nav.main-header.navbar.navbar-expand.navbar-dark {
 }
 .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item:hover>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-link:focus {
     background-color: #e3e7e7 !important;
-    color: #000000 !important;
+    color: #495057 !important;
 }
 
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
