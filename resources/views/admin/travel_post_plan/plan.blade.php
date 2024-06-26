@@ -61,8 +61,8 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <img src="{{ $plan->image!=null ? asset('admin-assets/uploads/travel_post_plan/plan'.'/'.$plan->image) : "image"}}"
-                                                    alt="image" width="100">
+                                                <img class="img_size" src="{{ $plan->image!=null ? asset('admin-assets/uploads/travel_post_plan/plan'.'/'.$plan->image) : "image"}}"
+                                                    alt="image">
                                             </td>
                                             <td>{{ ucwords($plan->name) }}</td>
                                             <td> {{ $plan->arriving }}</td>

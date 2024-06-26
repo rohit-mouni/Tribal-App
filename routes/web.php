@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
         Route::get('user-delete/{id}', 'userDelete')->name('user.delete');
         Route::get('user-profile-update/{id?}', 'userProfileUpdateView')->name('user.profile.update.view');
         Route::post('user-profile-update/{id?}', 'userProfileUpdate')->name('user.profile.update');
+        //upload admin profile image
+        Route::post('update-admin-profile', 'updateAdminProfile')->name('update.admin.profile');
     });
 
     Route::controller(CategoryController::class)->prefix('admin')->group(function () {

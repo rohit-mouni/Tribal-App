@@ -3,7 +3,7 @@
 @section('content')
 <style>
     .img-preview {
-        max-width: 150px%;
+        max-width: 150px;
         max-height: 150px;
         /* display: none; */
         margin-top: 10px;
@@ -55,7 +55,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <img src="{{ $post->image!=null ? asset('admin-assets/uploads/travel_post_plan/post'.'/'.$post->image) : "image"}}"
+                                                <img class="img_size" src="{{ $post->image!=null ? asset('admin-assets/uploads/travel_post_plan/post'.'/'.$post->image) : "image"}}"
                                                     alt="image" width="100">
                                             </td>
                                             <td>{{ ucwords($post->title) }}</td>

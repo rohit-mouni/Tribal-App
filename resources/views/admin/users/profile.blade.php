@@ -23,48 +23,58 @@
     <style>
         .avatar-upload {
             position: relative;
+            display: inline-block;
         }
 
-        .avatar-edit {
-            position: absolute;
-            top: 210px;
-            height: 36px;
-            left: 37%;
-            width: 103px;
-            overflow: hidden;
-        }
-
-        .avatar-edit input {
-            opacity: 0;
-        }
-
-        .avatar-edit label {
+        .avatar-upload .avatar-preview {
             position: relative;
-            top: -47px;
-            width: 100%;
-        }
-
-        .avatar-edit label::before {
-            position: absolute;
-            content: 'Choose File';
-            font-size: 15px;
-            padding: 10px 10px;
-            top: 3px;
-            left: 0;
-            background: #000;
-            border-radius: 8px;
-            color: #fff;
-        }
-
-        .avatar-preview img {
-            height: 200px;
             width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #f8f8f8;
+            margin: 0 auto;
+            border: 2px solid #dddddd;
+        }
+
+        .avatar-upload .avatar-preview img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            position: relative;
-            left: 50%;
-            transform: translate(-50%, 0px);
-            margin-bottom: 50px;
+        }
+
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #ffffff;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cccccc;
+            cursor: pointer;
+        }
+
+        .avatar-upload .avatar-edit input[type='file'] {
+            display: none;
+        }
+
+        .avatar-upload .avatar-edit label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        .avatar-upload .avatar-edit label .pencil-icon {
+            width: 20px;
+            height: 20px;
         }
     </style>
 
@@ -86,25 +96,25 @@
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline admin_edit_profile_image">
                         <div class="card-body box-profile">
-                            <form method="post" action="#" id="upload-image-form" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('update.admin.profile') }}" id="upload-image-form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="avatar-upload">
-                                    <div class="avatar-edit">
-                                        <input type='file' name="image" id="adminimageUpload"
-                                            accept=".png, .jpg, .jpeg" onchange="readURL(this);" />
-                                        <label for="adminimageUpload"></label>
-                                    </div>
                                     <div class="avatar-preview">
                                         @if(Auth::user()->profile_image)
-                                        <img src="{{ url('admin-assets/uploads/profileimages/' . $data->profile_image) }}"
-                                            alt="image" width="100">
-                                            @else
-                                            <img src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}"
-                                            class="user-image img-circle elevation-2" alt="User Image">
-                                            @endif
+                                        <img id="imagePreview" src="{{ url('admin-assets/uploads/profileimages/' . $data->profile_image) }}" alt="image">
+                                        @else
+                                        <img id="imagePreview" src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}" class="user-image img-circle elevation-2" alt="User Image">
+                                        @endif
+                                    </div>
+                                    <div class="avatar-edit">
+                                        <input type="file" name="image" id="adminimageUpload" accept=".png, .jpg, .jpeg" onchange="readURLAndSubmit(this);" />
+                                        <label for="adminimageUpload">
+                                            {{-- <img src="/mnt/data/image.png" alt="Edit" class="pencil-icon"> --}}
+                                        </label>
                                     </div>
                                 </div>
                             </form>
+
                             <h3 class="profile-username text-center">{{ $data->name }}</h3>
                             <p class="text-muted text-center">{{ ucwords($data->user_type) }}</p>
 
@@ -149,8 +159,8 @@
                                 <!------Setting Tab-------->
                                 <div class="tab-pane" id="settings">
 
-                                    <form class="form-horizontal" action="{{ route('admin.change.detail') }}"
-                                        method="post" name="general_info" id="general_info">
+                                    <form class="form-horizontal" action="{{ route('admin.change.detail') }}" method="post"
+                                        name="general_info" id="general_info">
                                         @csrf
 
                                         <div class="form-group row">
@@ -242,9 +252,6 @@
                                     </form>
 
                                 </div>
-
-
-
                             </div>
                             <!-- /.tab-content -->
                         </div>
@@ -258,9 +265,20 @@
     </section>
     <!-- /.content -->
 
-
-
     <script type="text/javascript">
+        function readURLAndSubmit(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+
+                // Submit the form after the image is loaded
+                input.form.submit();
+            }
+        }
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -272,7 +290,6 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
 
         $('#adminimageUpload').change(function(e) {
             e.preventDefault();

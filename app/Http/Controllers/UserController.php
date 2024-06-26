@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Vertical;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
@@ -124,7 +125,6 @@ class UserController extends Controller
     }
     public function userProfileUpdate(Request $request)
     {
-        // dd($request->all());
        $user = User::where('id',$request->id)->first();
        if($user)
        {
@@ -136,7 +136,6 @@ class UserController extends Controller
        $user->vertical_id=$request->vertical_id;
        if ($request->hasFile('main_image')) {
         $file = $request->file('main_image');
-        //$image=$file->getClientOriginalName();
         $main_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
         $destinationPath ='admin-assets/uploads/profileimages/';
         $file->move($destinationPath,$main_image);
@@ -144,7 +143,6 @@ class UserController extends Controller
        }
        if ($request->hasFile('second_image')) {
         $file = $request->file('second_image');
-        //$image=$file->getClientOriginalName();
         $second_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
         $destinationPath ='admin-assets/uploads/profileimages/';
         $file->move($destinationPath,$second_image);
@@ -152,7 +150,6 @@ class UserController extends Controller
        }
        if ($request->hasFile('third_image')) {
         $file = $request->file('third_image');
-        //$image=$file->getClientOriginalName();
         $third_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
         $destinationPath ='admin-assets/uploads/profileimages/';
         $file->move($destinationPath,$third_image);
@@ -166,5 +163,32 @@ class UserController extends Controller
         return redirect()->route('user.list')->with('error','User profile not found');
     }
 
+    }
+
+    public function updateAdminProfile(Request $request)
+    {
+        $request->validate([
+            'image'        => 'image|mimes:jpeg,png,jpg,gif,webp'
+        ]);
+
+        $admin_id=Auth::user()->id;
+        $user = User::where('id',$admin_id)->first();
+
+        if ($request->hasFile('image')) {
+
+            //deleting previous image
+            $ImagePath = public_path('admin-assets/uploads/profileimages/') . $user->profile_image;
+            File::delete($ImagePath);
+            $user->delete();
+
+            $file = $request->file('image');
+            $admin_profile_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
+            $destinationPath ='admin-assets/uploads/profileimages/';
+            $file->move($destinationPath,$admin_profile_image);
+            $user->profile_image=$admin_profile_image;
+           }
+
+           $user->save();
+           return back()->with('success','Profile image updated successfully');
     }
 }

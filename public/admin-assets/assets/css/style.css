@@ -242,3 +242,8 @@ span#content-summernote-error {
 .main-sidebar.sidebar-dark-primary .sidebar {
     margin-top: 0 !important;
 }
+.img_size
+{
+    height: 80px;
+    width:80px;
+}
