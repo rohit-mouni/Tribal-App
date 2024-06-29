@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -14,7 +16,7 @@ class UserController extends Controller
 {
     public function userList(Request $request)
     {
-        $allUsers = User::where('user_type','!=','admin')->orderBy('id', 'desc')->get();
+        $allUsers = User::where('user_type', '!=', 'admin')->orderBy('id', 'desc')->get();
         return view('admin.users.index', compact('allUsers'));
     }
     public function userCreate(Request $request)
@@ -23,11 +25,10 @@ class UserController extends Controller
     }
     public function userStore(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'name'        => 'required|unique:users,name',
             'email'       => 'required|email|unique:users,email',
-            'password'    => 'required|min:8',//|confirmed',
+            'password'    => 'required|min:8', //|confirmed',
             'user_type'    => 'required',
             // 'image'       => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
@@ -50,7 +51,7 @@ class UserController extends Controller
         //     $data['profile_image'] = $filename;
         // }
         // ----
-        $data['name'] = $request->name;
+        $data['brand_name'] = $request->name;
         $data['email'] = $request->email;
         $data['user_type'] = $request->user_type;
         $data['password'] = Hash::make($request->password);
@@ -99,7 +100,7 @@ class UserController extends Controller
         //     $data['profile_image'] = $filename;
         // }
 
-        $data['name'] =  $request->name;
+        $data['brand_name'] =  $request->name;
         $data['email'] = $request->email;
         $data['status'] = $request->status;
         $data['user_type'] = $request->user_type;
@@ -120,49 +121,45 @@ class UserController extends Controller
     public function userProfileUpdateView($id)
     {
         $verticals = Vertical::get();
-        $user=User::where('id',$id)->first();
-        return view('admin.users.update_profile',compact('user','verticals'));
+        $user = User::where('id', $id)->first();
+        return view('admin.users.update_profile', compact('user', 'verticals'));
     }
     public function userProfileUpdate(Request $request)
     {
-       $user = User::where('id',$request->id)->first();
-       if($user)
-       {
-       $user->brand_name=$request->brand_name;
-       $user->bio=$request->bio;
-       $user->instagram_username=$request->instagram_username;
-       $user->dob=$request->dob;
-       $user->gender=$request->gender;
-       $user->vertical_id=$request->vertical_id;
-       if ($request->hasFile('main_image')) {
-        $file = $request->file('main_image');
-        $main_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
-        $destinationPath ='admin-assets/uploads/profileimages/';
-        $file->move($destinationPath,$main_image);
-        $user->profile_image=$main_image;
-       }
-       if ($request->hasFile('second_image')) {
-        $file = $request->file('second_image');
-        $second_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
-        $destinationPath ='admin-assets/uploads/profileimages/';
-        $file->move($destinationPath,$second_image);
-        $user->profile_img_second=$second_image;
-       }
-       if ($request->hasFile('third_image')) {
-        $file = $request->file('third_image');
-        $third_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
-        $destinationPath ='admin-assets/uploads/profileimages/';
-        $file->move($destinationPath,$third_image);
-        $user->profile_img_third=$third_image;
-       }
-       $user->save();
-       return redirect()->route('user.list')->with('success','User profile updated successfully');
-    }
-    else
-    {
-        return redirect()->route('user.list')->with('error','User profile not found');
-    }
-
+        $user = User::where('id', $request->id)->first();
+        if ($user) {
+            $user->brand_name = $request->brand_name;
+            $user->bio = $request->bio;
+            $user->instagram_username = $request->instagram_username;
+            $user->dob = $request->dob;
+            $user->gender = $request->gender;
+            $user->vertical_id = $request->vertical_id;
+            if ($request->hasFile('main_image')) {
+                $file = $request->file('main_image');
+                $main_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
+                $destinationPath = 'admin-assets/uploads/profileimages/';
+                $file->move($destinationPath, $main_image);
+                $user->profile_image = $main_image;
+            }
+            if ($request->hasFile('second_image')) {
+                $file = $request->file('second_image');
+                $second_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
+                $destinationPath = 'admin-assets/uploads/profileimages/';
+                $file->move($destinationPath, $second_image);
+                $user->profile_img_second = $second_image;
+            }
+            if ($request->hasFile('third_image')) {
+                $file = $request->file('third_image');
+                $third_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
+                $destinationPath = 'admin-assets/uploads/profileimages/';
+                $file->move($destinationPath, $third_image);
+                $user->profile_img_third = $third_image;
+            }
+            $user->save();
+            return redirect()->route('user.list')->with('success', 'User profile updated successfully');
+        } else {
+            return redirect()->route('user.list')->with('error', 'User profile not found');
+        }
     }
 
     public function updateAdminProfile(Request $request)
@@ -171,8 +168,8 @@ class UserController extends Controller
             'image'        => 'image|mimes:jpeg,png,jpg,gif,webp'
         ]);
 
-        $admin_id=Auth::user()->id;
-        $user = User::where('id',$admin_id)->first();
+        $admin_id = Auth::user()->id;
+        $user = User::where('id', $admin_id)->first();
 
         if ($request->hasFile('image')) {
 
@@ -182,13 +179,13 @@ class UserController extends Controller
             $user->delete();
 
             $file = $request->file('image');
-            $admin_profile_image = rand(100,10000).'.'.$file->getClientOriginalExtension();
-            $destinationPath ='admin-assets/uploads/profileimages/';
-            $file->move($destinationPath,$admin_profile_image);
-            $user->profile_image=$admin_profile_image;
-           }
+            $admin_profile_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = 'admin-assets/uploads/profileimages/';
+            $file->move($destinationPath, $admin_profile_image);
+            $user->profile_image = $admin_profile_image;
+        }
 
-           $user->save();
-           return back()->with('success','Profile image updated successfully');
+        $user->save();
+        return back()->with('success', 'Profile image updated successfully');
     }
 }

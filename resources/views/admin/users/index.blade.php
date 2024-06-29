@@ -58,7 +58,7 @@
                                             </td>
                                             @endif --}}
 
-                                            <td>{{ ucwords($user->name) }}</td>
+                                            <td>{{ ucwords($user->brand_name) }}</td>
                                             <td>{{ ucwords($user->email) }}</td>
                                             <td>{{ ucwords($user->user_type) }}</td>
                                             <td>
