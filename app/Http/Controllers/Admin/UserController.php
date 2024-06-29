@@ -28,7 +28,7 @@ class UserController extends Controller
         $request->validate([
             'name'        => 'required|unique:users,name',
             'email'       => 'required|email|unique:users,email',
-            'password'    => 'required|min:8', //|confirmed',
+            'password'    => 'required|min:8|confirmed', //|confirmed',
             'user_type'    => 'required',
             // 'image'       => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
@@ -55,7 +55,6 @@ class UserController extends Controller
         $data['email'] = $request->email;
         $data['user_type'] = $request->user_type;
         $data['password'] = Hash::make($request->password);
-        // dd($data);
         // -----
         User::create($data);
         return redirect()->route('user.list')->with('success', 'User Create Successfully');
@@ -73,7 +72,7 @@ class UserController extends Controller
             'email'        => 'required|unique:users,email,' . $id,
             'status'       => 'required',
             'user_type'    => 'required',
-            // 'password'     => 'required|min:8|conform_password',
+            // 'password'     => 'required|min:8',
             // 'image'        => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
         // --image---
@@ -104,6 +103,7 @@ class UserController extends Controller
         $data['email'] = $request->email;
         $data['status'] = $request->status;
         $data['user_type'] = $request->user_type;
+        // $data['password'] = Hash::make($request->password);
 
         User::where('id', $id)->update($data);
         return redirect()->route('user.list')->with('success', 'User Details Updated Successfully');

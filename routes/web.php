@@ -22,8 +22,8 @@ Route::controller(AuthController::class)->prefix('admin')->group(function () {
     Route::post('reset-forgot-password', 'resetForgotPassword')->name('admin.reset.forgotpassword');
     Route::get('change-password/{token}', 'changePassword')->name('admin.change.password');
     Route::post('store-password', 'storePassword')->name('admin.store.password');
-    Route::post('change-detail', 'changeAdminDetail')->name('admin.change.detail');
-    Route::post('password-reset', 'changeAdminPassword')->name('admin.reset.password');
+    // Route::post('change-detail', 'changeAdminDetail')->name('admin.change.detail');
+    // Route::post('password-reset', 'changeAdminPassword')->name('admin.reset.password');
 });
 });
 
@@ -33,6 +33,11 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard', 'Dashboard')->name('dashboard');
         Route::get('logout', 'logout')->name('logout');
         Route::get('profile', 'profile')->name('profile');
+    });
+
+    Route::controller(AuthController::class)->prefix('admin')->group(function () {
+        Route::post('change-detail', 'changeAdminDetail')->name('admin.change.detail');
+        Route::post('password-reset', 'changeAdminPassword')->name('admin.reset.password');
     });
 
     Route::controller(UserController::class)->prefix('admin')->group(function () {
