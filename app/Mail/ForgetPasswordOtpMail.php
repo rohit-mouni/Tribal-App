@@ -9,20 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ForgetPasswordMail extends Mailable
+class ForgetPasswordOtpMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-   public $data;
+    public $data;
     public function __construct($data)
     {
-       $this->data=$data;
+        $this->data=$data;
     }
 
     public function build()
     {
-        return $this->subject('Forget Password OTP')
-        ->view('admin.auth.forgot-password-mail')
-        ->with('data', $this->data);
+        return $this->subject('Forget Password Otp')->view('api.forget_password_otp');
     }
 }

@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    $.validator.addMethod("customEmailValidation", function(value, element) {
+        return /\S+@\S+\.\S+/.test(value);
+    }, "Please enter a valid email address");
     //select multiple options
     $('.select_multiple').select2();
 
@@ -320,5 +323,78 @@ $(document).ready(function () {
             error.addClass('invalid-feedback');
             element.closest('.form-group').append(error);
         },
+    });
+    $("#change_password_admin").validate({
+        rules: {
+            current_password: {
+                required: true,
+                minlength: 8
+            },
+            password: {
+                required: true,
+                minlength: 8
+            },
+            password_confirmation: {
+                required: true,
+                equalTo: "#password",
+                minlength: 8
+
+            }
+        },
+        messages: {
+            current_password: {
+                required: 'Please enter current password'
+            },
+            password: {
+                required: 'Please enter new password'
+            },
+            password_confirmation: {
+                required: 'Please enter confirmation password',
+                equalTo: 'Password not match'
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.col-sm-10').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
+    });
+    $("#admin_deatils").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            email: {
+                required: true,
+                email: true,
+                customEmailValidation: true
+            },
+        },
+        messages: {
+            name: {
+                required: 'Please enter name'
+            },
+            email: {
+                required: 'Please enter email'
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.col-sm-10').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
     });
 });

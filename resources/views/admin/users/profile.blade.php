@@ -1,5 +1,5 @@
 @extends ('admin/index')
-@section('title', 'User-Profile')
+@section('title', 'Admin-Profile')
 @section('content')
 
     <!-- Content Header (Page header) -->
@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">User-Profile</h1>
+                    <h1 class="m-0">Admin-Profile</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">User Profile</li>
+                        <li class="breadcrumb-item active">Admin Profile</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -160,28 +160,28 @@
                                 <div class="tab-pane" id="settings">
 
                                     <form class="form-horizontal" action="{{ route('admin.change.detail') }}" method="post"
-                                        name="general_info" id="general_info">
+                                        name="admin_deatils" id="admin_deatils">
                                         @csrf
 
                                         <div class="form-group row">
                                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="Enter Name" value="{{ $data->name }}">
                                                 @error('name')
                                                     <div class="form-valid-error text-danger">{{ $message }}</div>
                                                 @enderror
-                                                <input type="text" class="form-control" id="name" name="name"
-                                                    placeholder="Enter Name" value="{{ $data->name }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="Email" value="{{ $data->email }}">
                                                 @error('email')
                                                     <div class="form-valid-error text-danger">{{ $message }}</div>
                                                 @enderror
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    placeholder="Email" value="{{ $data->email }}">
                                             </div>
                                         </div>
 
@@ -205,7 +205,7 @@
                                     </form>
 
                                     <form class="form-horizontal" action="{{ route('admin.reset.password') }}"
-                                        method="post" name="password_info" id="password_info">
+                                        method="post" id="change_password_admin">
                                         @csrf
 
                                         <div class="form-group row">
@@ -235,9 +235,9 @@
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Confirm
                                                 Password</label>
                                             <div class="col-sm-10">
-                                                <input type="password" class="form-control" id="confirm_password"
-                                                    name="confirm_password" placeholder="Confirm Password">
-                                                @error('confirm_password')
+                                                <input type="password" class="form-control" id="password_confirmation"
+                                                    name="password_confirmation" placeholder="Confirm Password">
+                                                @error('password_confirmation')
                                                     <div class="form-valid-error text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
