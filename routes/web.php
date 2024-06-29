@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TravelPostPlanController;
-use App\Http\Controllers\VerticalController;
-use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TravelPostPlanController;
+use App\Http\Controllers\Admin\VerticalController;
+use App\Http\Controllers\Admin\SubCategoryController;
 
 
 Route::get('/', function () {

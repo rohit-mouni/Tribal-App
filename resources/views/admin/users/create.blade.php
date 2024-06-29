@@ -55,9 +55,9 @@
                                 <div class="form-group">
                                     <label for="Inputusername">User Type</label>
                                     <select class="form-control" name="user_type">
-                                        <option value="">Select User</option>
+                                        {{-- <option value="">Select User</option> --}}
                                         <option value="brand">Brand</option>
-                                        <option value="creator">Creator</option>
+                                        {{-- <option value="creator">Creator</option> --}}
                                     </select>
                                     @error('user_type')
                                         <div class="form-valid-error text-danger">{{ $message }}</div>
