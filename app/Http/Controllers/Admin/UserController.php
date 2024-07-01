@@ -122,7 +122,7 @@ class UserController extends Controller
     public function userProfileUpdateView($id)
     {
         $verticals = Vertical::get();
-        $user = Admin::where('id', $id)->first();
+        $user = User::where('id', $id)->first();
         return view('admin.users.update_profile', compact('user', 'verticals'));
     }
     public function userProfileUpdate(Request $request)
