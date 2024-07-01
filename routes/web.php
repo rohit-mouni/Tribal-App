@@ -27,9 +27,8 @@ Route::controller(AuthController::class)->prefix('admin')->group(function () {
 });
 });
 
-
-Route::middleware('auth')->group(function () {
-    Route::controller(DashboardController::class)->prefix('admin')->middleware('auth')->group(function () {
+Route::middleware('Authenticated')->group(function () {
+    Route::controller(DashboardController::class)->prefix('admin')->group(function () {
         Route::get('dashboard', 'Dashboard')->name('dashboard');
         Route::get('logout', 'logout')->name('logout');
         Route::get('profile', 'profile')->name('profile');
