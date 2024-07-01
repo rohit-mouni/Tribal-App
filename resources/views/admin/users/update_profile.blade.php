@@ -177,6 +177,7 @@
                             <input type="date" id="dob" name="dob" value="{{ $user->userProfile->dob }}"
                                 class="form-control">
                         </div>
+                        
 
                         <div class="form-group">
                             <label for="gender">Gender</label>
