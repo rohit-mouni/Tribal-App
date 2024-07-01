@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="Inputusername">Brand Name</label>
                                     <input type="text" name="name" class="form-control"
-                                        value="{{ $TrendsData->name }}" placeholder="Enter name">
+                                        value="{{ $TrendsData->brand_name }}" placeholder="Enter name">
                                     @error('name')
                                         <div class="form-valid-error text-danger">{{ $message }}</div>
                                     @enderror

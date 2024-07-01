@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Vertical;
 use Intervention\Image\Facades\Image;
@@ -121,7 +122,7 @@ class UserController extends Controller
     public function userProfileUpdateView($id)
     {
         $verticals = Vertical::get();
-        $user = User::where('id', $id)->first();
+        $user = Admin::where('id', $id)->first();
         return view('admin.users.update_profile', compact('user', 'verticals'));
     }
     public function userProfileUpdate(Request $request)
@@ -168,11 +169,10 @@ class UserController extends Controller
             'image'        => 'image|mimes:jpeg,png,jpg,gif,webp'
         ]);
 
-        $admin_id = Auth::user()->id;
-        $user = User::where('id', $admin_id)->first();
+        $admin_id = Auth::guard('admin')->user()->id;
+        $user = Admin::where('id', $admin_id)->first();
 
         if ($request->hasFile('image')) {
-
             //deleting previous image
             $ImagePath = public_path('admin-assets/uploads/profileimages/') . $user->profile_image;
             File::delete($ImagePath);

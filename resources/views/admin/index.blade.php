@@ -66,8 +66,8 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        @if (!empty(Auth::user()->profile_image))
-                            <img src="{{ url('/admin-assets/uploads/profileimages') }}/{{ auth()->user()->profile_image }}"
+                        @if (!empty(Auth::guard('admin')->user()->profile_image))
+                            <img src="{{ url('/admin-assets/uploads/profileimages') }}/{{ auth()->guard('admin')->user()->profile_image }}"
                                 class="user-image img-circle elevation-2" alt="User Image">
                         @else
                             <img src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}"
@@ -78,8 +78,8 @@
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <!-- User image -->
                         <li class="user-header bg-primary">
-                            @if (!empty(Auth::user()->profile_image))
-                                <img src="{{ url('/admin-assets/uploads/profileimages') }}/{{ auth()->user()->profile_image }}"
+                            @if (!empty(Auth::guard('admin')->user()->profile_image))
+                                <img src="{{ url('/admin-assets/uploads/profileimages') }}/{{ auth()->guard('admin')->user()->profile_image }}"
                                     class="user-image img-circle elevation-2" alt="User Image">
                             @else
                                 <img src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}"
@@ -105,8 +105,8 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        @if (!empty(Auth::user()->profile_image))
-                            <img src="{{ url('/admin-assets/uploads/profileimages') }}/{{ auth()->user()->profile_image }}"
+                        @if (!empty(Auth::guard('admin')->user()->profile_image))
+                            <img src="{{ url('/admin-assets/uploads/profileimages') }}/{{ auth()->guard('admin')->user()->profile_image }}"
                                 class="img-circle elevation-2" alt="User Image"
                                 style="height: 2.1rem; width: 2.1rem; object-fit: cover;">
                         @else

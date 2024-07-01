@@ -113,7 +113,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email',
         ]);
-        $admin_id = Auth::user()->id;
+        $admin_id = Auth::guard('admin')->user()->id;
         $admin = Admin::where('id', $admin_id)->first();
         $admin->name = $request->name;
         $admin->email = $request->email;

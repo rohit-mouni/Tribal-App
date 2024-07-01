@@ -96,20 +96,25 @@
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline admin_edit_profile_image">
                         <div class="card-body box-profile">
-                            <form method="post" action="{{ route('update.admin.profile') }}" id="upload-image-form" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('update.admin.profile') }}" id="upload-image-form"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="avatar-upload">
                                     <div class="avatar-preview">
-                                        @if(Auth::user()->profile_image)
-                                        <img id="imagePreview" src="{{ url('admin-assets/uploads/profileimages/' . $data->profile_image) }}" alt="image">
+                                        @if (Auth::guard('admin')->user()->profile_image)
+                                            <img id="imagePreview"
+                                                src="{{ url('admin-assets/uploads/profileimages/' . $data->profile_image) }}"
+                                                alt="image">
                                         @else
-                                        <img id="imagePreview" src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}" class="user-image img-circle elevation-2" alt="User Image">
+                                            <img id="imagePreview"
+                                                src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}"
+                                                class="user-image img-circle elevation-2" alt="User Image">
                                         @endif
                                     </div>
                                     <div class="avatar-edit">
-                                        <input type="file" name="image" id="adminimageUpload" accept=".png, .jpg, .jpeg" onchange="readURLAndSubmit(this);" />
+                                        <input type="file" name="image" id="adminimageUpload"
+                                            accept=".png, .jpg, .jpeg" onchange="readURLAndSubmit(this);" />
                                         <label for="adminimageUpload">
-                                            {{-- <img src="/mnt/data/image.png" alt="Edit" class="pencil-icon"> --}}
                                         </label>
                                     </div>
                                 </div>
@@ -150,10 +155,6 @@
                                         <label class="col-sm-2 col-form-label">Email : </label>
                                         <div class="col-sm-10 mt-2">{{ $data->email }}</div>
                                     </div>
-                                    {{-- <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Mobile : </label>
-                                        <div class="col-sm-10">{{ $data->mobile }}</div>
-                                    </div> --}}
                                 </div>
 
                                 <!------Setting Tab-------->
@@ -167,7 +168,7 @@
                                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Enter Name" value="{{ $data->name }}">
+                                                    placeholder="Enter Name" value="{{ $data->name }}">
                                                 @error('name')
                                                     <div class="form-valid-error text-danger">{{ $message }}</div>
                                                 @enderror
@@ -178,30 +179,18 @@
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
                                                 <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Email" value="{{ $data->email }}">
+                                                    placeholder="Email" value="{{ $data->email }}">
                                                 @error('email')
                                                     <div class="form-valid-error text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
 
-                                        {{-- <div class="form-group row">
-                                            <label for="inputEmail" class="col-sm-2 col-form-label">Mobile</label>
-                                            <div class="col-sm-10">
-                                                @error('mobile')
-                                                    <div class="form-valid-error text-danger">{{ $message }}</div>
-                                                @enderror
-                                                <input type="text" class="form-control" id="mobile" name="mobile"
-                                                    placeholder="Mobile" value="{{ $data->mobile }}">
-                                            </div>
-                                        </div> --}}
-
                                         <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
                                                 <button type="submit" class="btn btn-danger">Submit</button>
                                             </div>
                                         </div>
-
                                     </form>
 
                                     <form class="form-horizontal" action="{{ route('admin.reset.password') }}"
