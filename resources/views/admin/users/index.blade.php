@@ -59,7 +59,7 @@
                                             @endif --}}
 
                                             <td>{{ ucwords($user->brand_name) }}</td>
-                                            <td>{{ ucwords($user->email) }}</td>
+                                            <td>{{ ($user->email) }}</td>
                                             <td>{{ ucwords($user->user_type) }}</td>
                                             <td>
                                                 @if ($user->status == 'active')

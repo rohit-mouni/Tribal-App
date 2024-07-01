@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('forget-password', 'forgetPassword');
     Route::post('verify-otp', 'verifyOtp');
     Route::post('reset-password', 'resetPassword');
+    Route::post('complete-profile', 'completeProfile');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
