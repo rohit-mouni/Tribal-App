@@ -85,7 +85,7 @@
                                 <img src="{{ url('/admin-assets/uploads/placeholderImage/admin.jpg') }}"
                                     class="user-image img-circle elevation-2" alt="User Image">
                             @endif
-                            <p> {{ auth()->user()->name }} </p>
+                            <p> {{ !empty(auth()->guard('admin')->user()) ? auth()->guard('admin')->user()->name :'N/A' }} </p>
                         </li>
                 </li>
                 <li class="user-footer">
@@ -116,7 +116,7 @@
                         @endif
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                        <a href="#" class="d-block">{{ !empty(auth()->guard('admin')->user()) ? auth()->guard('admin')->user()->name :'N/A' }}</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->

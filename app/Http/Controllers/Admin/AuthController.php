@@ -9,13 +9,13 @@ use App\Mail\ForgetPasswordMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-// use Mail;
 
 class AuthController extends Controller
 {
@@ -26,11 +26,11 @@ class AuthController extends Controller
     public function loginCrediential(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email|exists:admins,email',
             'password' => 'required|min:8',
         ]);
 
-        if (Auth::attempt($validatedData)) {
+        if (Auth::guard('admin')->attempt($validatedData)) {
             return redirect()->route('dashboard')->with('success', 'User Login Successfully');
         } else {
             return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
@@ -59,7 +59,7 @@ class AuthController extends Controller
             return redirect()->route('admin.forgotpassword')->with('info', 'Password reset link already sent! Please check your email');
         }
 
-        $admin = User::where('email', $request->email)->where('user_type', 'admin')->first();
+        $admin = Admin::where('email', $request->email)->first();
         if (isset($admin) && $admin != "") {
             $token = Str::random(64);
             DB::table('password_reset_tokens')->insert([
@@ -84,7 +84,7 @@ class AuthController extends Controller
     public function storePassword(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users',
+            'email' => 'required|email|exists:admins',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -95,12 +95,11 @@ class AuthController extends Controller
             ])
             ->first();
 
-
         if (!$updatePassword) {
             return back()->withInput()->with('error', 'Your token has been expired!');
         }
 
-        $user = User::where('email', $request->email)
+        $user = Admin::where('email', $request->email)
             ->update(['password' => Hash::make($request->password)]);
 
         DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
@@ -115,7 +114,7 @@ class AuthController extends Controller
             'email' => 'required|email',
         ]);
         $admin_id = Auth::user()->id;
-        $admin = User::where('id', $admin_id)->first();
+        $admin = Admin::where('id', $admin_id)->first();
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->save();
@@ -125,17 +124,16 @@ class AuthController extends Controller
 
     public function changeAdminPassword(Request $request)
     {
-
         $validatedData = $request->validate([
             'current_password' => 'required',
             'password' => 'required|confirmed|min:8',
         ]);
 
-        if (!Hash::check($request->current_password, Auth::user()->password)) {
+        if (!Hash::check($request->current_password, Auth::guard('admin')->user()->password)) {
             return redirect()->back()->with('error', 'Current password does not match');
         }
 
-        $admin = User::where('id', Auth::user()->id)->first();
+        $admin = Admin::where('id', Auth::guard('admin')->user()->id)->first();
         $admin->password = Hash::make($request->password);
         $admin->save();
         return redirect()->route('profile')->with('success', 'Password change successfully');

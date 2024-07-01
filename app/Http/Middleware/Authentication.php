@@ -4,10 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class NotLoggedIn
+class Authentication
 {
     /**
      * Handle an incoming request.
@@ -16,9 +15,6 @@ class NotLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('admin')->check()) {
-            return redirect()->route('dashboard');
-        }
         return $next($request);
     }
 }
