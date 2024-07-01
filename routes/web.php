@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
         Route::get('vertical-create', 'verticalCreate')->name('vertical.create');
         Route::post('vertical-store', 'verticalStore')->name('vertical.store');
         Route::get('vertical-edit/{id}', 'verticalEdit')->name('vertical.edit');
-        Route::post('vertical-update/{id}', 'verticalUpdate')->name('vertical.update');
+        Route::post('vertical-update', 'verticalUpdate')->name('vertical.update');
         Route::get('vertical-delete/{id}', 'verticalDelete')->name('vertical.delete');
     });
 
