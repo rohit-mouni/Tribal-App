@@ -36,16 +36,16 @@ class VerticalController extends Controller
         return view('admin.vertical.edit', compact('Category'));
     }
 
-    public function verticalUpdate(Request $request, $id)
+    public function verticalUpdate(Request $request)
     {
         $request->validate([
-            'vertical_name'   => 'required|unique:verticals,vertical_name,'.$id,
+            'vertical_name'   => 'required|unique:verticals,vertical_name,'.$request->vertical_id,
             'status'          => 'required',
         ]);
         $data['vertical_name'] = $request->vertical_name;
         $data['status'] =    $request->status;
 
-        Vertical::where('id', $id)->update($data);
+        Vertical::where('id', $request->vertical_id)->update($data);
         return redirect()->route('vertical.list')->with('success', 'Vertical Update Successfully');
     }
     public function verticalDelete($id)

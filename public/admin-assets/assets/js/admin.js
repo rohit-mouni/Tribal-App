@@ -1,8 +1,13 @@
 $(document).ready(function () {
 
-    $.validator.addMethod("customEmailValidation", function(value, element) {
+    //Jquery custome validation
+    $.validator.addMethod("customEmailValidation", function (value, element) {
         return /\S+@\S+\.\S+/.test(value);
     }, "Please enter a valid email address");
+    $.validator.addMethod("noSpaces", function(value, element) {
+        return value.trim().length > 0;
+    }, "This field cannot be empty.");
+
     //select multiple options
     $('.select_multiple').select2();
 
@@ -53,6 +58,25 @@ $(document).ready(function () {
         $("#title").after(post_id);
 
     });
+    $('.edit_vertical_btn').on('click', function (event) {
+        event.preventDefault(event)
+
+        var id = $(this).data('id');
+        var vertical_name = $(this).data('vertical_name');
+        var status = $(this).data('status');
+
+        $('#vertical_modal').modal('show');
+        $('#vertical_modal').find('form').attr("id", "edit_verticale");
+        $('#vertical_modal').find('form').attr("action", base_url + 'admin/vertical-update');
+        $('#vertical_modal #vertical_name').val(vertical_name);
+        $('#vertical_modal #status').val(status);
+
+        $('#vertical_modal #vertical_modal_title').text("Edit vertical");
+        $('#vertical_modal #vertical_submit_btn').text("Update");
+        var vertical_id = '<input type="hidden" name="vertical_id" value=' + id + ' class="vertical_id">';
+        $("#vertical_name").after(vertical_id);
+
+    });
     $('.edit_plan').on('click', function (event) {
         event.preventDefault(event)
 
@@ -67,8 +91,6 @@ $(document).ready(function () {
         var verticals = $(this).data('verticals');
         var image = $(this).data('image');
         var img_path = $(this).data('img_path');
-
-        // alert(id + "  " + name + "  " +arriving + "  " + departing + "  " + about_trip + "  " + link + "  " +destinations + "  " + verticals + "  " + image + "  " + img_path + " " + is_private);
 
         $('#plan_modal').modal('show');
         $('#plan_modal').find('form').attr("id", "edit_plan_form");
@@ -134,6 +156,9 @@ $(document).ready(function () {
             form.validate().resetForm();
             $(this).find('form').trigger('reset');
             form.find('.error').removeClass('error');
+            form.find('.is-invalid').removeClass('is-invalid');
+            form.find('.is-valid').removeClass('is-valid');
+
 
             $('#plan_modal #plan_model_title').text("Add plan");
             $('#plan_modal #plan_submit_btn').text("Submit");
@@ -149,6 +174,10 @@ $(document).ready(function () {
                 form.validate().resetForm();
                 $(this).find('form').trigger('reset');
                 form.find('.error').removeClass('error');
+                form.find('.is-invalid').removeClass('is-invalid');
+                form.find('.is-valid').removeClass('is-valid');
+
+
 
                 $('#post_modal #post_model_title').text("Add post");
                 $('#post_modal #post_submit_btn').text("Submit");
@@ -163,13 +192,35 @@ $(document).ready(function () {
                     form.validate().resetForm();
                     $(this).find('form').trigger('reset');
                     form.find('.error').removeClass('error');
+                    form.find('.is-invalid').removeClass('is-invalid');
+                    form.find('.is-valid').removeClass('is-valid');
+
 
                     $('#plan_modal #plan_model_title').text("Add plan");
+
                     $('#plan_modal #plan_submit_btn').text("Submit");
 
                     $('#destinations').val([]).trigger('change');
                     $('#verticals').val([]).trigger('change');
                 }
+                else
+                    if ($(this).find('form').attr("id") == 'vertical_store' || $(this).find('form').attr("id") == 'edit_verticale') {
+
+                        $(this).find('form').attr("id", "vertical_store");
+                        $(this).find('form').attr("action", base_url + 'admin/vertical.store');
+                        $('.vertical_id').remove();
+                        var form = $('#vertical_store');
+                        form.validate().resetForm();
+                        $(this).find('form').trigger('reset');
+                        form.find('.error').removeClass('error');
+                        form.find('.is-invalid').removeClass('is-invalid');
+                        form.find('.is-valid').removeClass('is-valid');
+
+                        $('#vertical_modal #vertical_modal_title').text("Add vertical");
+
+                        $('#vertical_modal #vertical_submit_btn').text("Submit");
+
+                    }
     });
     // $('#hangout_add_btn').on('click', function (event) {
     //     event.preventDefault(event)
@@ -233,13 +284,19 @@ $(document).ready(function () {
                 }
             },
             title: {
-                required: true
+                required: true,
+                noSpaces : true
+
             },
             description: {
-                required: true
+                required: true,
+                noSpaces : true
+
             },
             instagram_post_link: {
-                required: true
+                required: true,
+                noSpaces : true
+
             }
         },
         messages: {
@@ -260,6 +317,12 @@ $(document).ready(function () {
             error.addClass('invalid-feedback');
             element.closest('.form-group').append(error);
         },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
     });
     $("#add_plan_form,#edit_plan_form").validate({
         rules: {
@@ -272,7 +335,9 @@ $(document).ready(function () {
                 }
             },
             name: {
-                required: true
+                required: true,
+                noSpaces : true
+
             },
             arriving: {
                 required: true
@@ -281,10 +346,14 @@ $(document).ready(function () {
                 required: true
             },
             about_trip: {
-                required: true
+                required: true,
+                noSpaces : true
+
             },
             link: {
-                required: true
+                required: true,
+                noSpaces : true
+
             },
             'destinations[]': {
                 required: true
@@ -323,21 +392,33 @@ $(document).ready(function () {
             error.addClass('invalid-feedback');
             element.closest('.form-group').append(error);
         },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
     });
     $("#change_password_admin").validate({
         rules: {
             current_password: {
                 required: true,
-                minlength: 8
+                minlength: 8,
+                noSpaces : true
+
             },
             password: {
                 required: true,
-                minlength: 8
+                minlength: 8,
+                noSpaces : true
+
             },
             password_confirmation: {
                 required: true,
                 equalTo: "#password",
-                minlength: 8
+                minlength: 8,
+                noSpaces : true
+
 
             }
         },
@@ -358,10 +439,10 @@ $(document).ready(function () {
             error.addClass('invalid-feedback');
             element.closest('.col-sm-10').append(error);
         },
-        highlight: function(element, errorClass, validClass) {
+        highlight: function (element, errorClass, validClass) {
             $(element).addClass('is-invalid').removeClass('is-valid');
         },
-        unhighlight: function(element, errorClass, validClass) {
+        unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass('is-invalid').addClass('is-valid');
         }
     });
@@ -369,7 +450,8 @@ $(document).ready(function () {
         rules: {
             name: {
                 required: true,
-                minlength: 3
+                minlength: 3,
+                noSpaces : true
             },
             email: {
                 required: true,
@@ -390,10 +472,34 @@ $(document).ready(function () {
             error.addClass('invalid-feedback');
             element.closest('.col-sm-10').append(error);
         },
-        highlight: function(element, errorClass, validClass) {
+        highlight: function (element, errorClass, validClass) {
             $(element).addClass('is-invalid').removeClass('is-valid');
         },
-        unhighlight: function(element, errorClass, validClass) {
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
+    });
+    $("#vertical_store,#edit_verticale").validate({
+        rules: {
+            vertical_name: {
+                required: true,
+                minlength: 3,
+                noSpaces : true
+            }
+        },
+        messages: {
+            vertical_name: {
+                required: 'Please enter vertical name'
+            }
+        }, errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass('is-invalid').addClass('is-valid');
         }
     });

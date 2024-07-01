@@ -27,7 +27,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('vertical.create') }}" class="btn btn-primary float-left">Add Vertical</a>
+                            <button type="button" id="vertical_add_btn" class="btn btn-primary float-left" data-toggle="modal" data-target="#vertical_modal">
+                                Add Vertical
+                              </button>
                         </div>
                         <div class="card-body">
                             <table id="subadminlisting" class="table table-bordered table-striped">
@@ -54,8 +56,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('vertical.edit', $category->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                <a href="" id="edit_vertical_btn" data-id="{{ $category->id }}" data-vertical_name="{{ $category->vertical_name }}" data-status="{{ $category->status }}"
+                                                    class="btn btn-warning btn-sm edit_post edit_vertical_btn">Edit</a>
                                                 <a href="{{ route('vertical.delete', $category->id) }}"
                                                     class="btn btn-danger btn-sm">Delete</a>
                                             </td>
@@ -73,6 +75,44 @@
         </div>
     </section>
     <!-- /. Main content -->
+      <!-- Modal -->
+  <div class="modal fade" id="vertical_modal" tabindex="-1" role="dialog" aria-labelledby="vertical_modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title vertical_modal_title" id="vertical_modal_title" >Add Vertical</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('vertical.store') }}" method="post" enctype="multipart/form-data" id="vertical_store">
+                @csrf
+                <div class="form-group">
+                    <label for="vertical_name">Vertical Name</label>
+                    <input type="text" class="form-control" id="vertical_name" placeholder="Enter vertical name" name="vertical_name">
+                    @error('vertical_name')
+                   <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="Inputusername">Status</label>
+                    <select class="form-control" name="status" id="status">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                    @error('status')
+                        <div class="form-valid-error text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="vertical_submit_btn">Submit</button>
+            </div>
+        </div>
+    </form>
+    </div>
+  </div>
 
     <script>
         $(document).ready(function() {
