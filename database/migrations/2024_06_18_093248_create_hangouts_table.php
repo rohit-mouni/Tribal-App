@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('title')->nullable();
             $table->string('duration')->nullable();
-            // $table->enum('duration',['1 Hours','8 Hours','24 Hours'])->default('active');
             $table->timestamps();
         });
     }

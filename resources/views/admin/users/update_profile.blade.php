@@ -1,5 +1,5 @@
 @extends ('admin/index')
-@section('title', 'Update User Profile')
+@section('title', 'Complete User Profile')
 @section('content')
 
     <!-- Content Header (Page header) -->
@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Update-User-Profile</h1>
+                    <h1 class="m-0">Complete-User-Profile</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Update Profile</li>
+                        <li class="breadcrumb-item active">Complete Profile</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -153,12 +153,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="brand_name">Brand Name</label>
                             <input class="form-control" type="text" id="brand_name" name="brand_name"
                                 value="{{ $user->brand_name }}" placeholder="Enter brand name">
                             <input type="hidden" id="id" name="id" value="{{ $user->id }}">
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <label for="bio">Bio</label>
@@ -170,6 +170,7 @@
                             <input class="form-control" type="text" id="instagram_username" name="instagram_username"
                                 value="{{ $user->userProfile ? $user->userProfile->instagram_username : '' }}"
                                 placeholder="Enter instagram username">
+                            <input type="hidden" id="id" name="id" value="{{ $user->id }}">
                         </div>
                         {{-- testing --}}
                         <div class="form-group">
