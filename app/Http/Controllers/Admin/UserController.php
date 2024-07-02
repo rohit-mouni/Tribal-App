@@ -131,35 +131,34 @@ class UserController extends Controller
     {
         $user = User::where('id', $request->id)->first();
         if ($user) {
-            $CompleteProfile = new CreatorBrandProfile;
-            $CompleteProfile->user_id = $user->id;
-            $CompleteProfile->bio = $request->bio;
-            $CompleteProfile->instagram_username = $request->instagram_username;
-            $CompleteProfile->dob = $request->dob;
-            $CompleteProfile->gender = $request->gender;
-            $CompleteProfile->vertical_ids = $request->vertical_id;
+            $CompleteProfile['user_id'] = $user->id;
+            $CompleteProfile['bio'] = $request->bio;
+            $CompleteProfile['instagram_username'] = $request->instagram_username;
+            $CompleteProfile['dob'] = $request->dob;
+            $CompleteProfile['gender'] = $request->gender;
+            $CompleteProfile['vertical_ids'] = $request->vertical_id;
             if ($request->hasFile('main_image')) {
                 $file = $request->file('main_image');
                 $main_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
                 $destinationPath = 'admin-assets/uploads/profileimages/';
                 $file->move($destinationPath, $main_image);
-                $CompleteProfile->profile_image = $main_image;
+                $CompleteProfile['profile_image'] = $main_image;
             }
             if ($request->hasFile('second_image')) {
                 $file = $request->file('second_image');
                 $second_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
                 $destinationPath = 'admin-assets/uploads/profileimages/';
                 $file->move($destinationPath, $second_image);
-                $CompleteProfile->profile_img_second = $second_image;
+                $CompleteProfile['profile_img_second'] = $second_image;
             }
             if ($request->hasFile('third_image')) {
                 $file = $request->file('third_image');
                 $third_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
                 $destinationPath = 'admin-assets/uploads/profileimages/';
                 $file->move($destinationPath, $third_image);
-                $CompleteProfile->profile_img_third = $third_image;
+                $CompleteProfile['profile_img_third'] = $third_image;
             }
-            $CompleteProfile->save();
+            CreatorBrandProfile::updateOrCreate(['user_id' => $CompleteProfile['user_id']], $CompleteProfile);
             return redirect()->route('user.list')->with('success', 'User profile updated successfully');
         } else {
             return redirect()->route('user.list')->with('error', 'User profile not found');
@@ -192,4 +191,3 @@ class UserController extends Controller
         return back()->with('success', 'Profile image updated successfully');
     }
 }
-

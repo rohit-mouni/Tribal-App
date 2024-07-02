@@ -52,6 +52,6 @@ class User extends Authenticatable
 
     public function userProfile()
     {
-        return $this->hasOne(CreatorBrandProfile::class,'id');
+        return $this->hasOne(CreatorBrandProfile::class,'user_id');
     }
 }

@@ -150,7 +150,6 @@
                                     <img class="img_height_width"id="third_image_preview" src="#"
                                         alt="Third Image Preview" style="display: none;">
                                 @endif
-
                             </div>
                         </div>
 
@@ -163,32 +162,38 @@
 
                         <div class="form-group">
                             <label for="bio">Bio</label>
-                            <textarea class="form-control" id="bio" name="bio" placeholder="Enter bio">{{ $user->userProfile->bio }}</textarea>
+                            <textarea class="form-control" id="bio" name="bio" placeholder="Enter bio">{{ $user->userProfile ? $user->userProfile->bio : '' }}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="instagram_username">Instagram Username</label>
                             <input class="form-control" type="text" id="instagram_username" name="instagram_username"
-                                value="{{ $user->userProfile->instagram_username }}" placeholder="Enter instagram username">
+                                value="{{ $user->userProfile ? $user->userProfile->instagram_username : '' }}"
+                                placeholder="Enter instagram username">
                         </div>
                         {{-- testing --}}
                         <div class="form-group">
                             <label for="dob">Date of Birth</label>
-                            <input type="date" id="dob" name="dob" value="{{ $user->userProfile->dob }}"
-                                class="form-control">
+                            <input type="date" id="dob" name="dob"
+                                value="{{ $user->userProfile ? $user->userProfile->dob : '' }}" class="form-control">
                         </div>
-                        
 
                         <div class="form-group">
                             <label for="gender">Gender</label>
                             <select id="gender" name="gender" class="form-control">
                                 <option value="">Select</option>
-                                <option {{ $user->userProfile->gender == 'male' ? 'selected' : '' }} value="male">Male
+                                <option
+                                    {{ $user->userProfile ? ($user->userProfile->gender == 'male' ? 'selected' : '') : '' }}
+                                    value="male">Male
                                 </option>
-                                <option {{ $user->userProfile->gender == 'female' ? 'selected' : '' }} value="female">
+                                <option
+                                    {{ $user->userProfile ? ($user->userProfile->gender == 'female' ? 'selected' : '') : '' }}
+                                    value="female">
                                     Female
                                 </option>
-                                <option {{ $user->userProfile->gender == 'other' ? 'selected' : '' }} value="other">Other
+                                <option
+                                    {{ $user->userProfile ? ($user->userProfile->gender == 'other' ? 'selected' : '') : '' }}
+                                    value="other">Other
                                 </option>
                             </select>
                         </div>
@@ -198,11 +203,27 @@
                             <select class="form-control" id="vertical_id" name="vertical_id">
                                 <option value="">Select</option>
                                 @foreach ($verticals as $vertical)
-                                    <option {{ $vertical->id == $user->userProfile->vertical_ids ? 'selected' : '' }}
-                                        value="{{ $vertical->id }} ">{{ $vertical->vertical_name }}</option>
+                                    <option value="{{ $vertical->id }}" 
+                                        @if ($user->userProfile && $vertical->id == $user->userProfile->vertical_ids) selected 
+                                        @endif>
+                                        {{ $vertical->vertical_name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
+
+                        {{-- <div class="form-group">
+                            <label for="vertical">Verticals</label>
+                            <select class="form-control" id="vertical_id" name="vertical_id">
+                                <option value="">Select</option>
+                                @foreach ($verticals as $vertical)
+                                    <option
+                                        {{ $vertical->id == $user->userProfile ? ($user->userProfile->vertical_ids ? 'selected' : '') : $vertical->vertical_name }}
+                                        value="{{ $vertical->id }} ">{{ $vertical->vertical_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div> --}}
 
                         <div class="form-group">
                             <button type="submit" class="btn-primary btn">Update</button>
@@ -230,5 +251,3 @@
     </script>
 
 @endsection
-
-
