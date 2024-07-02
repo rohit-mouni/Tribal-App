@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\CreatorBrandProfile;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\ForgetPasswordOtpMail;
 use Illuminate\Support\Facades\Mail;
@@ -16,7 +17,6 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
             'password' => 'required|min:8',
@@ -29,13 +29,9 @@ class AuthController extends Controller
             ], 422);
         }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-
-
-            $user =User::where('email',$request->email)->first();
-
+            $user = User::where('email', $request->email)->first();
             //if email is already stored in database but not registered
-            if($user->is_email_verified == '0')
-            {
+            if ($user->is_email_verified == '0') {
                 $otp = rand(100000, 999999);
                 $user->otp = $otp;
                 $user->save();
@@ -52,22 +48,19 @@ class AuthController extends Controller
                     "is_email_verified" => $user->is_email_verified,
                     "is_profile_completed" => $user->is_profile_completed
                 ], 422);
-            }
-            else
-            //if email is already registered but profile is not completed
-            if ($user->is_email_verified == 1 && $user->is_profile_completed == 0) {
-                return response()->json([
-                    "status" => "success",
-                    "message" => "Please complete your profile",
-                    "is_email_verified" => $user->is_email_verified,
-                    "is_profile_completed" => $user->is_profile_completed
-                ], 422);
-            }
-
+            } else
+                //if email is already registered but profile is not completed
+                if ($user->is_email_verified == 1 && $user->is_profile_completed == 0) {
+                    return response()->json([
+                        "status" => "success",
+                        "message" => "Please complete your profile",
+                        "is_email_verified" => $user->is_email_verified,
+                        "is_profile_completed" => $user->is_profile_completed
+                    ], 422);
+                }
 
             $user = Auth::user();
             $token = $user->createToken('login')->plainTextToken;
-
             return response()->json([
                 'success' => true,
                 'message' => 'Login Successfully!',
@@ -136,7 +129,6 @@ class AuthController extends Controller
                 "message" => $validator->errors()->first()
             ], 422);
         }
-
         $user_type = $request->user_type;
         $user = new User;
 
@@ -235,7 +227,6 @@ class AuthController extends Controller
             ];
 
             Mail::to($request->email)->send(new ForgetPasswordOtpMail($data));
-
             return response()->json([
                 "status" => "success",
                 "message" => "Otp send successfully on your mail"
@@ -259,7 +250,6 @@ class AuthController extends Controller
                 "message" => $validator->errors()->first()
             ], 422);
         }
-
         $user = User::where(['email' => $request->email])->first();
         if (!$user) {
             return response()->json(["status" => "error", "message" => "user not found"]);
@@ -271,7 +261,6 @@ class AuthController extends Controller
             $user->save();
             return response()->json(["status" => "success", "message" => "otp match successfully", "is_profile_completed" => $user->is_profile_completed]);
         }
-
         return response()->json(["status" => "error", "message" => "otp does not match"]);
     }
     public function resetPassword(Request $request)
@@ -287,7 +276,6 @@ class AuthController extends Controller
                 "message" => $validator->errors()->first()
             ], 422);
         }
-
 
         $user = User::where('email', $request->email)->first();
         if ($user) {
@@ -307,12 +295,12 @@ class AuthController extends Controller
     public function completeProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'bio' => 'required',
-            'instagram_username' => 'required',
-            'dob' => 'required',
-            'gender' => 'required',
-            'vertical_id' => 'required',
+            'email'         => 'required|email|exists:users,email',
+            'bio'           => 'required',
+            'dob'           => 'required',
+            'gender'        => 'required|in:male,female,other',
+            'vertical_ids'  => 'required',
+            'instagram_username'  => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -324,39 +312,36 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
         if (isset($user)) {
+            $CompleteProfile['bio'] = $request->bio;
+            $CompleteProfile['user_id'] = $user->id;
+            $CompleteProfile['instagram_username'] = $request->instagram_username;
+            $CompleteProfile['dob'] = $request->dob;
+            $CompleteProfile['gender'] = $request->gender;
+            $CompleteProfile['vertical_ids'] = $request->vertical_ids;
 
-            // dd("working 3");
-
-            // $user->brand_name = $request->brand_name;
-            $user->bio = $request->bio;
-            $user->instagram_username = $request->instagram_username;
-            $user->dob = $request->dob;
-            $user->gender = $request->gender;
-            $user->vertical_id = $request->vertical_id;
             if ($request->hasFile('main_image')) {
                 $file = $request->file('main_image');
                 $main_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
                 $destinationPath = 'admin-assets/uploads/profileimages/';
                 $file->move($destinationPath, $main_image);
-                $user->profile_image = $main_image;
+                $CompleteProfile['profile_image'] = $main_image;
             }
             if ($request->hasFile('second_image')) {
                 $file = $request->file('second_image');
                 $second_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
                 $destinationPath = 'admin-assets/uploads/profileimages/';
                 $file->move($destinationPath, $second_image);
-                $user->profile_img_second = $second_image;
+                $CompleteProfile['profile_img_second'] = $second_image;
             }
             if ($request->hasFile('third_image')) {
                 $file = $request->file('third_image');
                 $third_image = rand(100, 10000) . '.' . $file->getClientOriginalExtension();
                 $destinationPath = 'admin-assets/uploads/profileimages/';
                 $file->move($destinationPath, $third_image);
-                $user->profile_img_third = $third_image;
+                $CompleteProfile['profile_img_third'] = $third_image;
             }
-
-            $user->is_profile_completed = '1';
-            $user->save();
+            CreatorBrandProfile::updateOrCreate(['user_id' => $CompleteProfile['user_id']], $CompleteProfile);
+            $user->update(['is_profile_completed' => '1']);
             return response()->json([
                 "status" => "success",
                 "message" => "Profile completed successfully"
@@ -366,3 +351,4 @@ class AuthController extends Controller
         }
     }
 }
+

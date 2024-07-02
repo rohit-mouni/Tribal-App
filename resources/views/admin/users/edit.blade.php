@@ -38,9 +38,9 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="Inputusername">Brand Name</label>
-                                    <input type="text" name="name" class="form-control"
-                                        value="{{ $TrendsData->brand_name }}" placeholder="Enter name">
-                                    @error('name')
+                                    <input type="text" name="brand_name" class="form-control"
+                                        value="{{ $TrendsData->brand_name }}" placeholder="Enter brand name">
+                                    @error('brand_name')
                                         <div class="form-valid-error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

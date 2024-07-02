@@ -29,7 +29,7 @@ class UserController extends Controller
     public function userStore(Request $request)
     {
         $request->validate([
-            'name'        => 'required|unique:users,name',
+            'brand_name'        => 'required|unique:users,brand_name',
             'email'       => 'required|email|unique:users,email',
             'password'    => 'required|min:8|confirmed', //|confirmed',
             'user_type'    => 'required',
@@ -54,7 +54,7 @@ class UserController extends Controller
         //     $data['profile_image'] = $filename;
         // }
         // ----
-        $data['brand_name'] = $request->name;
+        $data['brand_name'] = $request->brand_name;
         $data['email'] = $request->email;
         $data['user_type'] = $request->user_type;
         $data['password'] = Hash::make($request->password);
@@ -71,7 +71,7 @@ class UserController extends Controller
     public function userUpdate(Request $request, $id)
     {
         $request->validate([
-            'name'         => 'required|unique:users,name,' . $id,
+            'brand_name'         => 'required|unique:users,brand_name,' . $id,
             'email'        => 'required|unique:users,email,' . $id,
             'status'       => 'required',
             'user_type'    => 'required',
@@ -102,14 +102,14 @@ class UserController extends Controller
         //     $data['profile_image'] = $filename;
         // }
 
-        $data['brand_name'] =  $request->name;
+        $data['brand_name'] =  $request->brand_name;
         $data['email'] = $request->email;
         $data['status'] = $request->status;
         $data['user_type'] = $request->user_type;
         // $data['password'] = Hash::make($request->password);
 
         User::where('id', $id)->update($data);
-        return redirect()->route('user.list')->with('success', 'User Details Updated Successfully');
+        return redirect()->route('user.list')->with('success', 'User Detail Update Successfully');
     }
 
     public function userDelete($id)
@@ -159,6 +159,7 @@ class UserController extends Controller
                 $CompleteProfile['profile_img_third'] = $third_image;
             }
             CreatorBrandProfile::updateOrCreate(['user_id' => $CompleteProfile['user_id']], $CompleteProfile);
+            $user->update(['is_profile_completed' => '1']);
             return redirect()->route('user.list')->with('success', 'User profile updated successfully');
         } else {
             return redirect()->route('user.list')->with('error', 'User profile not found');
@@ -186,7 +187,6 @@ class UserController extends Controller
             $file->move($destinationPath, $admin_profile_image);
             $user->profile_image = $admin_profile_image;
         }
-
         $user->save();
         return back()->with('success', 'Profile image updated successfully');
     }

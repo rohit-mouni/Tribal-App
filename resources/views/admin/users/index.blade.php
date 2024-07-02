@@ -35,7 +35,7 @@
                                     <tr>
                                         <th>S.no</th>
                                         {{-- <th>Profile image</th> --}}
-                                        <th>Name</th>
+                                        <th>Brand Name</th>
                                         <th>Email</th>
                                         <th>User Type</th>
                                         <th>Status</th>
@@ -74,8 +74,7 @@
                                                 <a href="{{ route('user.delete', $user->id) }}"
                                                     class="btn btn-danger btn-sm">Delete</a>
                                                     <a href="{{ route('user.profile.update.view', $user->id) }}"
-                                                        class="btn btn-primary btn-sm">Profile Update</a>
-
+                                                        class="btn btn-primary btn-sm">Complete-User-Profile</a>
                                             </td>
                                         </tr>
                                     @endforeach
