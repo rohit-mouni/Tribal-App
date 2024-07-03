@@ -163,7 +163,7 @@
 
                 <div class="form-group">
                     <label for="destinations">Destinations</label>
-                    <select style="width: 100%;" name="destinations[]" class="form-control select_multiple" id="destinations" multiple>
+                    <select style="width: 100%;" name="destinations[]" class="form-control select_destinations" id="destinations" multiple>
                         {{-- <option value="">Select Multiple Destinations</option> --}}
                         <option value="one">One</option>
                         <option value="two">Two</option>
@@ -175,7 +175,7 @@
                 </div>
                 <div class="form-group">
                     <label for="duratioverticalsnInput">Verticals</label>
-                    <select style="width: 100%;" name="verticals[]" class="form-control select_multiple" id="verticals" multiple>
+                    <select style="width: 100%;" name="verticals[]" class="form-control select_verticals" id="verticals" multiple>
                         {{-- <option value="">Select Multiple Verticals</option> --}}
                         @foreach ($verticals as $vertical)
                         <option value="{{ $vertical->vertical_name }}">{{ $vertical->vertical_name }}</option>

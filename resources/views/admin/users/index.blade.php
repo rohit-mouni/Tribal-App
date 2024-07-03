@@ -27,7 +27,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('user.create') }}" class="btn btn-primary float-left">Add User</a>
+                            <button type="button" id="user_add_btn" class="btn btn-primary float-left" data-toggle="modal" data-target="#user_modal">
+                                Add Brand
+                              </button>
                         </div>
                         <div class="card-body">
                             <table id="subadminlisting" class="table table-bordered table-striped">
@@ -69,8 +71,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('user.edit', $user->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                <a href="" id="edit_user_btn" data-status="{{ $user->status }}" data-brand_name="{{ $user->brand_name }}" data-email="{{ $user->email }}" data-password="{{ $user->password }}" data-id="{{ $user->id }}"
+                                                    class="btn btn-warning btn-sm edit_user_btn">Edit</a>
                                                 <a href="{{ route('user.delete', $user->id) }}"
                                                     class="btn btn-danger btn-sm">Delete</a>
                                                     <a href="{{ route('user.profile.update.view', $user->id) }}"
@@ -90,6 +92,86 @@
         </div>
     </section>
     <!-- /. Main content -->
+          <!-- Modal -->
+  <div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="user_modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title user_modal_title" id="user_modal_title" >Add brand</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data" id="add_brand_form">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="Inputusername">Brand Name</label>
+                        <input type="text" name="brand_name" class="form-control" value="" id="brand_name"
+                            placeholder="Enter brand name">
+                        @error('brand_name')
+                            <div class="form-valid-error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Inputusername">Email Address</label>
+                        <input type="text" name="email" class="form-control" value="" id="email"
+                            placeholder="Enter Email">
+                        @error('email')
+                            <div class="form-valid-error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group password_div">
+                        <label for="Inputusername">Password</label>
+                        <input type="password" name="password" class="form-control" id="password"
+                            value="" placeholder="Enter Password">
+                        @error('password')
+                            <div class="form-valid-error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- <div class="form-group">
+                        <label for="Inputusername">Confirm Password</label>
+                        <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
+                            value="" placeholder="Enter Confirm Password">
+                        @error('password_confirmation')
+                            <div class="form-valid-error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div> --}}
+
+                    <div class="form-group">
+                        <label for="Inputusername">Status</label>
+                        <select class="form-control" name="status" id="status">
+                            <option value="active">
+                                Active</option>
+                            <option value="inactive">
+                                Inactive</option>
+                        </select>
+                        @error('status')
+                            <div class="form-valid-error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- <div class="form-group">
+                        <label for="new_image">Profile Image</label>
+                        <input type="file" name="image" class="form-control" value="{{ old('image') }}"
+                            placeholder="Enter image" onchange="loadFile(event)"><br>
+                        <img id="output" width="100px" />
+                        @error('image')
+                            <div class="form-valid-error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div> --}}
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" id="user_submit_btn" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+    </div>
+  </div>
 
     <script>
         $(document).ready(function() {
