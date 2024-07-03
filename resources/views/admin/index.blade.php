@@ -136,7 +136,7 @@
                             <a href="{{ route('user.list') }}"
                                 class="nav-link {{ Route::currentRouteName() == 'user.list' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-users"></i>
-                                <p>Users</p>
+                                <p>Brands</p>
                             </a>
                         </li>
 
