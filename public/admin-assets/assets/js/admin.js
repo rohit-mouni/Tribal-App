@@ -4,12 +4,24 @@ $(document).ready(function () {
     $.validator.addMethod("customEmailValidation", function (value, element) {
         return /\S+@\S+\.\S+/.test(value);
     }, "Please enter a valid email address");
-    $.validator.addMethod("noSpaces", function(value, element) {
+    $.validator.addMethod("noSpaces", function (value, element) {
         return value.trim().length > 0;
     }, "This field cannot be empty.");
 
     //select multiple options
-    $('.select_multiple').select2();
+    $('.select_destinations').select2(
+        {
+            placeholder: 'Select multiple destinations',
+            allowClear: true
+        }
+    );
+    $('.select_verticals').select2(
+        {
+            placeholder: 'Select multiple verticals',
+            allowClear: true
+        }
+    );
+
 
     //--------------------------------on edit button click------------------------
     // $('.edit_hangout').on('click', function (event) {
@@ -75,6 +87,28 @@ $(document).ready(function () {
         $('#vertical_modal #vertical_submit_btn').text("Update");
         var vertical_id = '<input type="hidden" name="vertical_id" value=' + id + ' class="vertical_id">';
         $("#vertical_name").after(vertical_id);
+
+    });
+    $('.edit_user_btn').on('click', function (event) {
+        event.preventDefault(event)
+
+        var id = $(this).data('id');
+        var brand_name = $(this).data('brand_name');
+        var email = $(this).data('email');
+        var status = $(this).data('status');
+
+        $('#user_modal').modal('show');
+        $('#user_modal').find('form').attr("id", "edit_brand_form");
+        $('#user_modal').find('form').attr("action", base_url + 'admin/user-update');
+        $('#user_modal #brand_name').val(brand_name);
+        $('#user_modal #email').val(email);
+        $('#user_modal #status').val(status);
+
+        $('#user_modal #user_modal_title').text("Edit brand");
+        $('#user_modal .password_div').hide();
+        $('#user_modal #user_submit_btn').text("Update");
+        var brand_id = '<input type="hidden" name="brand_id" value=' + id + ' class="brand_id">';
+        $("#brand_name").after(brand_id);
 
     });
     $('.edit_plan').on('click', function (event) {
@@ -221,6 +255,23 @@ $(document).ready(function () {
                         $('#vertical_modal #vertical_submit_btn').text("Submit");
 
                     }
+                    else
+                        if ($(this).find('form').attr("id") == 'add_brand_form' || $(this).find('form').attr("id") == 'edit_brand_form') {
+
+                            $(this).find('form').attr("id", "add_brand_form");
+                            $(this).find('form').attr("action", base_url + 'admin/user.store');
+                            $('.brand_id').remove();
+                            var form = $('#add_brand_form');
+                            form.validate().resetForm();
+                            $(this).find('form').trigger('reset');
+                            form.find('.error').removeClass('error');
+                            form.find('.is-invalid').removeClass('is-invalid');
+                            form.find('.is-valid').removeClass('is-valid');
+                            $('#user_modal .password_div').show();
+                            $('#user_modal #user_modal_title').text("Add brand");
+                            $('#user_modal #user_submit_btn').text("Submit");
+
+                        }
     });
     // $('#hangout_add_btn').on('click', function (event) {
     //     event.preventDefault(event)
@@ -285,17 +336,17 @@ $(document).ready(function () {
             },
             title: {
                 required: true,
-                noSpaces : true
+                noSpaces: true
 
             },
             description: {
                 required: true,
-                noSpaces : true
+                noSpaces: true
 
             },
             instagram_post_link: {
                 required: true,
-                noSpaces : true
+                noSpaces: true
 
             }
         },
@@ -336,7 +387,7 @@ $(document).ready(function () {
             },
             name: {
                 required: true,
-                noSpaces : true
+                noSpaces: true
 
             },
             arriving: {
@@ -347,12 +398,12 @@ $(document).ready(function () {
             },
             about_trip: {
                 required: true,
-                noSpaces : true
+                noSpaces: true
 
             },
             link: {
                 required: true,
-                noSpaces : true
+                noSpaces: true
 
             },
             'destinations[]': {
@@ -404,20 +455,20 @@ $(document).ready(function () {
             current_password: {
                 required: true,
                 minlength: 8,
-                noSpaces : true
+                noSpaces: true
 
             },
             password: {
                 required: true,
                 minlength: 8,
-                noSpaces : true
+                noSpaces: true
 
             },
             password_confirmation: {
                 required: true,
                 equalTo: "#password",
                 minlength: 8,
-                noSpaces : true
+                noSpaces: true
 
 
             }
@@ -451,7 +502,7 @@ $(document).ready(function () {
             name: {
                 required: true,
                 minlength: 3,
-                noSpaces : true
+                noSpaces: true
             },
             email: {
                 required: true,
@@ -479,12 +530,56 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid').addClass('is-valid');
         }
     });
+    $("#add_brand_form,#edit_brand_form").validate({
+        rules: {
+            brand_name: {
+                required: true,
+                minlength: 3,
+                noSpaces: true
+            },
+            email: {
+                required: true,
+                email: true,
+                customEmailValidation: true
+            },
+            password: {
+                required: {
+                    depends: function (elem) {
+                        var fomrs_id = $(this).parents("form").attr("id");
+                        return fomrs_id != 'edit_brand_form';
+                    }
+                },
+                minlength: 8
+            }
+        },
+        messages: {
+            brand_name: {
+                required: 'Please enter brand name'
+            },
+            email: {
+                required: 'Please enter email'
+            },
+            password: {
+                required: 'Please enter password'
+            }
+        }, errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        }
+    });
     $("#vertical_store,#edit_verticale").validate({
         rules: {
             vertical_name: {
                 required: true,
                 minlength: 3,
-                noSpaces : true
+                noSpaces: true
             }
         },
         messages: {

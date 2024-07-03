@@ -201,30 +201,30 @@
 
                         <div class="form-group">
                             <label for="vertical">Verticals</label>
-                            <select class="form-control" id="vertical_id" name="vertical_id">
+                            <select class="form-control " id="vertical_id" name="vertical_id">
                                 <option value="">Select</option>
                                 @foreach ($verticals as $vertical)
-                                    <option value="{{ $vertical->id }}" 
-                                        @if ($user->userProfile && $vertical->id == $user->userProfile->vertical_ids) selected 
+                                    <option value="{{ $vertical->id }}"
+                                        @if ($user->userProfile && $vertical->id == $user->userProfile->vertical_ids) selected
                                         @endif>
                                         {{ $vertical->vertical_name }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-
                         {{-- <div class="form-group">
-                            <label for="vertical">Verticals</label>
-                            <select class="form-control" id="vertical_id" name="vertical_id">
-                                <option value="">Select</option>
+                            <label for="duratioverticalsnInput">Verticals</label>
+                            <select style="width: 100%;" name="verticals[]" class="form-control select_verticals" id="verticals" multiple>
                                 @foreach ($verticals as $vertical)
-                                    <option
-                                        {{ $vertical->id == $user->userProfile ? ($user->userProfile->vertical_ids ? 'selected' : '') : $vertical->vertical_name }}
-                                        value="{{ $vertical->id }} ">{{ $vertical->vertical_name }}
-                                    </option>
+                                {{-- <option value="{{ $vertical->vertical_name }}">{{ $vertical->vertical_name }}</option> --}}
+                                {{-- <option value="{{ $vertical->id }}"
+                                    @if ($user->userProfile && $vertical->id == $user->userProfile->vertical_ids) selected
+                                    @endif>
+                                    {{ $vertical->vertical_name }}
+                                </option>
                                 @endforeach
-                            </select>
-                        </div> --}}
+                            </select> --}}
+                        {{-- </div> --}}
 
                         <div class="form-group">
                             <button type="submit" class="btn-primary btn">Update</button>

@@ -31,8 +31,9 @@ class UserController extends Controller
         $request->validate([
             'brand_name'        => 'required|unique:users,brand_name',
             'email'       => 'required|email|unique:users,email',
-            'password'    => 'required|min:8|confirmed', //|confirmed',
-            'user_type'    => 'required',
+            'password'    => 'required|min:8', //|confirmed',
+            'status'       => 'required',
+            // 'user_type'    => 'required',
             // 'image'       => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
         // ----image----
@@ -56,7 +57,8 @@ class UserController extends Controller
         // ----
         $data['brand_name'] = $request->brand_name;
         $data['email'] = $request->email;
-        $data['user_type'] = $request->user_type;
+        $data['status'] = $request->status;
+        $data['user_type'] ="brand";
         $data['password'] = Hash::make($request->password);
         // -----
         User::create($data);
@@ -68,18 +70,18 @@ class UserController extends Controller
         return view('admin.users.edit', compact('TrendsData'));
     }
 
-    public function userUpdate(Request $request, $id)
+    public function userUpdate(Request $request)
     {
         $request->validate([
-            'brand_name'         => 'required|unique:users,brand_name,' . $id,
-            'email'        => 'required|unique:users,email,' . $id,
+            'brand_name'         => 'required|unique:users,brand_name,' . $request->brand_id,
+            'email'        => 'required|unique:users,email,' . $request->brand_id,
             'status'       => 'required',
-            'user_type'    => 'required',
+            // 'user_type'    => 'required',
             // 'password'     => 'required|min:8',
             // 'image'        => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
         // --image---
-        $dataImage = User::where('id', $id)->first();
+        $dataImage = User::where('id', $request->brand_id)->first();
         $path = public_path('admin-assets/uploads/profileimages/') . $dataImage->profile_image;
 
         // if ($img = $request->image) {
@@ -105,10 +107,10 @@ class UserController extends Controller
         $data['brand_name'] =  $request->brand_name;
         $data['email'] = $request->email;
         $data['status'] = $request->status;
-        $data['user_type'] = $request->user_type;
+        $data['user_type'] = "brand";
         // $data['password'] = Hash::make($request->password);
 
-        User::where('id', $id)->update($data);
+        User::where('id', $request->brand_id)->update($data);
         return redirect()->route('user.list')->with('success', 'User Detail Update Successfully');
     }
 
